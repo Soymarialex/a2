@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Falsos Cognados: El Diccionario Definitivo</title>
+    <!-- Carga de Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Configuración personalizada de Tailwind para incluir el color #FF79AC -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-pink': '#FF79AC', // El color solicitado
+                        'accent-dark': '#C64F83', // Un tono más oscuro del rosa para énfasis
+                        'accent-light': '#FFE8F2', // Un rosa muy claro para fondos de acierto
+                        'neutral-text': '#4b5563', // Gris oscuro para contraste
+                        'match-correct': '#4CAF50', // Verde para acierto
+                        'match-wrong': '#F44336',   // Rojo para error
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos personalizados */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f7f7; /* Fondo muy claro y neutro */
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid #FBCFE8; /* Borde rosa muy claro */
+        }
+        .accent-header {
+            color: #FF79AC; /* Color rosa principal para acento */
+            border-bottom: 2px solid #FBCFE8;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Estilo para las filas de la tabla */
+        .false-cognate-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1.2fr 1.3fr; /* 4 columnas */
+            gap: 0.5rem;
+            align-items: center;
+            padding: 0.5rem 0.25rem;
+            border-bottom: 1px solid #F3F4F6;
+        }
+
+        .false-cognate-row:hover {
+            background-color: #FEF3F8; /* Rosa muy claro al pasar el ratón */
+        }
+
+        /* Estilos para el juego de emparejamiento */
+        .match-item {
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            user-select: none;
+            border: 1px solid #FBCFE8;
+        }
+
+        .match-item:hover:not(.match-correct):not(.match-matched) {
+            transform: scale(1.02);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .match-selected {
+            border: 2px solid #FF79AC;
+            background-color: #FFE8F2;
+            transform: scale(1.01);
+            font-weight: 600;
+        }
+
+        .match-correct {
+            background-color: #DCFCE7; /* Verde claro */
+            color: #16A34A; /* Verde oscuro */
+            border: 2px solid #16A34A;
+            cursor: default;
+        }
+
+        .match-matched {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-8">
+
+    <div class="max-w-6xl mx-auto space-y-8">
+        <!-- Título Principal -->
+        <header class="text-center py-6 card">
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-primary-pink">
+                Cuídate de los Falsos Amigos
+            </h1>
+        </header>
+
+        <!-- Sección de Falsos Cognados (Tabla de 4 columnas) -->
+        <section id="falsos-cognados" class="card p-6 mb-8">
+            <h2 class="text-2xl font-bold accent-header text-primary-pink">
+                Comparación Directa (Español - Inglés)
+            </h2>
+            
+            <!-- Encabezados de la Tabla (4 columnas) -->
+            <div class="false-cognate-row text-center font-bold text-xs sm:text-sm border-b-2 border-primary-pink pb-3 mb-3">
+                <span class="text-gray-700 text-left pl-2">1. Palabra en Inglés (Intención)</span>
+                <span class="text-accent-dark">2. Falso Cognado (Español)</span>
+                <span class="text-gray-700 text-center">3. Significado Real del Cognado (Inglés)</span>
+                <span class="text-primary-pink text-right pr-2">4. Traducción Correcta (Español)</span>
+            </div>
+
+            <!-- Lista de Falsos Cognados -->
+            <div class="space-y-1 text-sm sm:text-base">
+                
+                <!-- Embarrassed -->
+                <div class="false-cognate-row">
+                    <span class="font-medium text-left pl-2">Embarrassed</span>
+                    <span class="font-bold text-accent-dark text-center">Embarazada</span>
+                    <span class="text-center text-neutral-text italic">Pregnant</span>
+                    <span class="text-right pr-2 font-bold text-primary-pink">Avergonzado/a</span>
+                </div>
+                
+                <!-- Actually -->
+                <div class="false-cognate-row">
+                    <span class="font-medium text-left pl-2">Actually</span>
+                    <span class="font-bold text-accent-dark text-center">Actualmente</span>
+                    <span class="text-center text-neutral-text italic">Currently, Nowadays</span>
+                    <span class="text-right pr-2 font-bold text-primary-pink">En realidad, De hecho</span>
+                </div>
+                
+                <!-- Library -->
+                <div class="false-cognate-row">
+                    <span class="font-medium text-left pl-2">Library</span>
+                    <span class="font-bold text-accent-dark text-center">Librería</span>
+                    <span class="text-center text-neutral-text italic">Bookstore</span>
+                    <span class="text-right pr-2 font-bold text-primary-pink">Biblioteca</span>
+                </div>
+                
+                <!-- Carpet -->
+                <div class="false-cognate-row">
+                    <span class="font-medium text-left pl-2">Carpet</span>
+                    <span class="font-bold text-accent-dark text-center">Carpeta</span>
+                    <span class="text-center text-neutral-text italic">Folder</span>
+                    <span class="text-right pr-2 font-bold text-primary-pink">Alfombra</span>
+                </div>
+                
+                <!-- Assist -->
+                <div class="false-cognate-row">
+                    <span class="font-medium text-left pl-2">Assist</span>
+                    <span class="font-bold text-accent-dark text-center">Asistir</span>
+                    <span class="text-center text-neutral-text italic">To attend (a class, a meeting)</span>
+                    <span class="text-right pr-2 font-bold text-primary-pink">Ayudar</span>
+                </div>
+                
+                <!-- Large -->
+                <div class="false-cognate-row">
+                    <span class="font-medium text-left pl-2">Large</span>
+                    <span class="font-bold text-accent-dark text-center">Largo</span>
+                    <span class="text-center text-neutral-text italic">Long</span>
+                    <span class="text-right pr-2 font-bold text-primary-pink">Grande</span>
+                </div>
+                
+                <!-- Realize -->
+                <div class="false-cognate-row">
+                    <span class="font-medium text-left pl-2">Realize</span>
+                    <span class="font-bold text-accent-dark text-center">Realizar</span>
+                    <span class="text-center text-neutral-text italic">To carry out, To perform</span>
+                    <span class="text-right pr-2 font-bold text-primary-pink">Darse cuenta</span>
+                </div>
+                
+                <!-- Exit -->
+                <div class="false-cognate-row">
+                    <span class="font-medium text-left pl-2">Exit</span>
+                    <span class="font-bold text-accent-dark text-center">Éxito</span>
+                    <span class="text-center text-neutral-text italic">Success</span>
+                    <span class="text-right pr-2 font-bold text-primary-pink">Salida</span>
+                </div>
+                
+                <!-- Fabric -->
+                <div class="false-cognate-row">
+                    <span class="font-medium text-left pl-2">Fabric</span>
+                    <span class="font-bold text-accent-dark text-center">Fábrica</span>
+                    <span class="text-center text-neutral-text italic">Factory</span>
+                    <span class="text-right pr-2 font-bold text-primary-pink">Tela</span>
+                </div>
+                
+                <!-- Introduce -->
+                <div class="false-cognate-row">
+                    <span class="font-medium text-left pl-2">Introduce</span>
+                    <span class="font-bold text-accent-dark text-center">Introducir</span>
+                    <span class="text-center text-neutral-text italic">To insert, To put in</span>
+                    <span class="text-right pr-2 font-bold text-primary-pink">Presentar (a alguien)</span>
+                </div>
+                
+                <!-- Eventually -->
+                <div class="false-cognate-row">
+                    <span class="font-medium text-left pl-2">Eventually</span>
+                    <span class="font-bold text-accent-dark text-center">Eventualmente</span>
+                    <span class="text-center text-neutral-text italic">Occasionally</span>
+                    <span class="text-right pr-2 font-bold text-primary-pink">Finalmente, Al final</span>
+                </div>
+                
+                <!-- Sensible -->
+                <div class="false-cognate-row">
+                    <span class="font-medium text-left pl-2">Sensible</span>
+                    <span class="font-bold text-accent-dark text-center">Sensible</span>
+                    <span class="text-center text-neutral-text italic">Sensitive, Emotional</span>
+                    <span class="text-right pr-2 font-bold text-primary-pink">Razonable, Sensato/a</span>
+                </div>
+                
+                <!-- Attend -->
+                <div class="false-cognate-row">
+                    <span class="font-medium text-left pl-2">Attend</span>
+                    <span class="font-bold text-accent-dark text-center">Atender</span>
+                    <span class="text-center text-neutral-text italic">To serve, To wait on</span>
+                    <span class="text-right pr-2 font-bold text-primary-pink">Asistir (a un evento, a clase)</span>
+                </div>
+                
+                <!-- Preservative -->
+                <div class="false-cognate-row">
+                    <span class="font-medium text-left pl-2">Preservative</span>
+                    <span class="font-bold text-accent-dark text-center">Preservativo</span>
+                    <span class="text-center text-neutral-text italic">Condom</span>
+                    <span class="text-right pr-2 font-bold text-primary-pink">Conservante</span>
+                </div>
+                
+                <!-- Success -->
+                <div class="false-cognate-row">
+                    <span class="font-medium text-left pl-2">Success</span>
+                    <span class="font-bold text-accent-dark text-center">Suceso</span>
+                    <span class="text-center text-neutral-text italic">Event, Incident</span>
+                    <span class="text-right pr-2 font-bold text-primary-pink">Éxito</span>
+                </div>
+                
+            </div>
+            
+            <div class="mt-8 pt-4 border-t border-gray-100 p-4 bg-pink-50 rounded-lg">
+                <p class="text-sm font-semibold text-primary-pink mb-2">
+                    Ejemplo Clave:
+                </p>
+                <p class="text-sm text-gray-700">
+                    Si quieres decir: "I want to <b>attend</b> the meeting," debes usar la columna 4: "Quiero <b>asistir</b> a la reunión."
+                </p>
+                <p class="text-sm text-gray-700">
+                    Si usas la columna 2: "Quiero <b>atender</b> a la reunión," en realidad estás diciendo "I want to <b>serve/wait on</b> the meeting."
+                </p>
+            </div>
+        </section>
+
+        <!-- Nueva Sección de Actividad de Emparejamiento -->
+        <section id="matching-activity" class="card p-6">
+            <h2 class="text-2xl font-bold accent-header text-primary-pink">
+                ¡Hora de Practicar! Actividad de Emparejamiento
+            </h2>
+
+            <!-- Estado de la actividad -->
+            <div class="mb-4 text-center">
+                <p id="current-part-text" class="text-lg font-semibold text-gray-700"></p>
+                <p id="match-instructions" class="text-sm text-accent-dark font-medium"></p>
+                <div class="w-full bg-gray-200 rounded-full h-2.5 mt-2">
+                    <div id="progress-bar" class="bg-primary-pink h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <!-- Contenedor de columnas de emparejamiento -->
+            <div class="grid grid-cols-2 gap-4" id="match-grid">
+                <div id="column-left" class="space-y-2">
+                    <h3 class="text-center text-lg font-bold text-gray-600">Columna Izquierda</h3>
+                    <!-- Los botones de palabras de la izquierda irán aquí -->
+                </div>
+                <div id="column-right" class="space-y-2">
+                    <h3 class="text-center text-lg font-bold text-gray-600">Columna Derecha</h3>
+                    <!-- Los botones de palabras de la derecha irán aquí -->
+                </div>
+            </div>
+
+            <!-- Mensaje de fin de juego -->
+            <div id="game-complete" class="text-center p-8 hidden">
+                <h3 class="text-3xl font-extrabold text-primary-pink mb-4">🎉 ¡Felicidades! 🎉</h3>
+                <p class="text-lg text-gray-700">Has completado todas las rondas de emparejamiento.</p>
+                <button onclick="startGame()" class="mt-4 px-6 py-2 bg-primary-pink text-white font-bold rounded-lg shadow-md hover:bg-accent-dark transition duration-200">
+                    Jugar de nuevo
+                </button>
+            </div>
+
+        </section>
+        
+    </div>
+
+    <!-- NUEVA SECCIÓN: Footer y Botón de Llamada a la Acción -->
+    <footer class="max-w-6xl mx-auto mt-12 py-8 text-center border-t border-pink-200">
+        <!-- Botón de Redirección -->
+        <a href="https://preply.com/en/tutor/5105409?utm_source=friend&utm_medium=ref&utm_campaign=stu_plg_plg_all_0_mul_xx_multiplesub_share-tutor-tutoring_1&utm_content=OTQ2NTAwNQ==" 
+           target="_blank" 
+           class="inline-block px-8 py-3 mb-6 text-lg font-extrabold text-white 
+                  bg-primary-pink rounded-lg shadow-xl 
+                  hover:bg-accent-dark transition duration-300 transform hover:scale-105 
+                  focus:outline-none focus:ring-4 focus:ring-primary-pink focus:ring-opacity-50">
+            Find your Spanish class here.
+        </a>
+        
+        <!-- Copyright -->
+        <p class="text-sm text-gray-500 mt-4">
+            © 2025 Spanish Lessons with María C. All rights reserved.
+        </p>
+    </footer>
+
+    <!-- Lógica de JavaScript para la actividad de emparejamiento -->
+    <script>
+        const cognateData = [
+            { id: 1, eng: "Embarrassed", false_esp: "Embarazada", correct_eng: "Pregnant", correct_esp: "Avergonzado/a" },
+            { id: 2, eng: "Actually", false_esp: "Actualmente", correct_eng: "Currently, Nowadays", correct_esp: "En realidad, De hecho" },
+            { id: 3, eng: "Library", false_esp: "Librería", correct_eng: "Bookstore", correct_esp: "Biblioteca" },
+            { id: 4, eng: "Carpet", false_esp: "Carpeta", correct_eng: "Folder", correct_esp: "Alfombra" },
+            { id: 5, eng: "Assist", false_esp: "Asistir", correct_eng: "To attend (a class, a meeting)", correct_esp: "Ayudar" },
+            
+            { id: 6, eng: "Large", false_esp: "Largo", correct_eng: "Long", correct_esp: "Grande" },
+            { id: 7, eng: "Realize", false_esp: "Realizar", correct_eng: "To carry out, To perform", correct_esp: "Darse cuenta" },
+            { id: 8, eng: "Exit", false_esp: "Éxito", correct_eng: "Success", correct_esp: "Salida" },
+            { id: 9, eng: "Fabric", false_esp: "Fábrica", correct_eng: "Factory", correct_esp: "Tela" },
+            { id: 10, eng: "Introduce", false_esp: "Introducir", correct_eng: "To insert, To put in", correct_esp: "Presentar (a alguien)" },
+            
+            { id: 11, eng: "Eventually", false_esp: "Eventualmente", correct_eng: "Occasionally", correct_esp: "Finalmente, Al final" },
+            { id: 12, eng: "Sensible", false_esp: "Sensible", correct_eng: "Sensitive, Emotional", correct_esp: "Razonable, Sensato/a" },
+            { id: 13, eng: "Attend", false_esp: "Atender", correct_eng: "To serve, To wait on", correct_esp: "Asistir (a un evento, a clase)" },
+            { id: 14, eng: "Preservative", false_esp: "Preservativo", correct_eng: "Condom", correct_esp: "Conservante" },
+            { id: 15, eng: "Success", false_esp: "Suceso", correct_eng: "Event, Incident", correct_esp: "Éxito" }
+        ];
+
+        let currentPart = 0; // 0 to 5 (6 parts total)
+        let selectedLeft = null;
+        let selectedRight = null;
+        let matchedPairs = 0;
+
+        const colLeftEl = document.getElementById('column-left');
+        const colRightEl = document.getElementById('column-right');
+        const currentPartTextEl = document.getElementById('current-part-text');
+        const matchInstructionsEl = document.getElementById('match-instructions');
+        const progressBarEl = document.getElementById('progress-bar');
+        const gameCompleteEl = document.getElementById('game-complete');
+        const matchGridEl = document.getElementById('match-grid');
+
+        // Función de utilidad para mezclar arrays
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        // Determina el tipo de emparejamiento y el conjunto de datos para la parte actual
+        function getPartData() {
+            const partIndex = currentPart % 3; // 0, 1, or 2 (for the 5-word chunks)
+            const isType1 = currentPart < 3; // Parts 0, 1, 2 (Type 1: Col 1 vs Col 4)
+            const startIndex = partIndex * 5;
+            const currentWords = cognateData.slice(startIndex, startIndex + 5);
+
+            let leftWords = [];
+            let rightWords = [];
+            let instructions = "";
+
+            if (isType1) {
+                // TIPO 1: Col 1 (English Word) vs Col 4 (Correct Spanish Translation)
+                instructions = "Empareja la palabra en Inglés con su <b>Traducción Correcta</b> en Español.";
+                currentWords.forEach(item => {
+                    leftWords.push({ id: item.id, text: item.eng, side: 'left' });
+                    rightWords.push({ id: item.id, text: item.correct_esp, side: 'right' });
+                });
+            } else {
+                // TIPO 2: Col 2 (False Spanish Cognate) vs Col 3 (Correct English Meaning)
+                instructions = "Empareja el <b>Falso Cognado en Español</b> con su <b>Significado Real</b> en Inglés.";
+                currentWords.forEach(item => {
+                    leftWords.push({ id: item.id, text: item.false_esp, side: 'left' });
+                    rightWords.push({ id: item.id, text: item.correct_eng, side: 'right' });
+                });
+            }
+
+            return {
+                left: shuffleArray(leftWords),
+                right: shuffleArray(rightWords),
+                instructions: instructions
+            };
+        }
+
+        // Manejador de clic para los botones de emparejamiento
+        function handleMatchClick(event) {
+            const target = event.currentTarget;
+            const side = target.dataset.side;
+            const id = target.dataset.id;
+            const currentSelection = { element: target, id: id, side: side };
+
+            // Resetear la selección en el mismo lado
+            if (side === 'left') {
+                if (selectedLeft) selectedLeft.element.classList.remove('match-selected');
+                selectedLeft = currentSelection;
+            } else {
+                if (selectedRight) selectedRight.element.classList.remove('match-selected');
+                selectedRight = currentSelection;
+            }
+            
+            target.classList.add('match-selected');
+
+            // Comprobar si hay una pareja completa seleccionada
+            if (selectedLeft && selectedRight) {
+                // Si los IDs coinciden, es una pareja correcta
+                if (selectedLeft.id === selectedRight.id) {
+                    selectedLeft.element.classList.add('match-correct', 'match-matched');
+                    selectedRight.element.classList.add('match-correct', 'match-matched');
+                    
+                    // Deshabilitar clics hasta la siguiente ronda
+                    selectedLeft.element.onclick = null;
+                    selectedRight.element.onclick = null;
+
+                    matchedPairs++;
+                    resetSelections();
+
+                    if (matchedPairs === 5) {
+                        setTimeout(nextPart, 1000); // Avanzar a la siguiente parte después de un breve retraso
+                    }
+                } else {
+                    // Pareja incorrecta: breve retroalimentación visual y reset
+                    selectedLeft.element.classList.add('bg-match-wrong', 'text-white');
+                    selectedRight.element.classList.add('bg-match-wrong', 'text-white');
+                    
+                    setTimeout(() => {
+                        selectedLeft.element.classList.remove('bg-match-wrong', 'text-white');
+                        selectedRight.element.classList.remove('bg-match-wrong', 'text-white');
+                        resetSelections();
+                    }, 500);
+                }
+            }
+        }
+
+        // Reinicia las variables de selección y el estado visual
+        function resetSelections() {
+            if (selectedLeft) selectedLeft.element.classList.remove('match-selected');
+            if (selectedRight) selectedRight.element.classList.remove('match-selected');
+            selectedLeft = null;
+            selectedRight = null;
+        }
+
+        // Renderiza el contenido para la parte actual
+        function renderPart() {
+            resetSelections();
+            matchedPairs = 0;
+            
+            const partData = getPartData();
+            
+            // Actualizar la barra de estado e instrucciones
+            const progress = (currentPart / 6) * 100;
+            progressBarEl.style.width = `${progress}%`;
+            currentPartTextEl.textContent = `Ronda ${currentPart + 1} de 6`;
+            matchInstructionsEl.innerHTML = partData.instructions;
+            
+            colLeftEl.innerHTML = '<h3 class="text-center text-lg font-bold text-gray-600">Columna Izquierda</h3>';
+            colRightEl.innerHTML = '<h3 class="text-center text-lg font-bold text-gray-600">Columna Derecha</h3>';
+
+            // Renderizar la columna izquierda
+            partData.left.forEach(item => {
+                const button = document.createElement('button');
+                button.className = 'match-item w-full p-3 rounded-lg bg-gray-50 text-neutral-text hover:bg-accent-light';
+                button.textContent = item.text;
+                button.dataset.id = item.id;
+                button.dataset.side = item.side;
+                button.onclick = handleMatchClick;
+                colLeftEl.appendChild(button);
+            });
+
+            // Renderizar la columna derecha
+            partData.right.forEach(item => {
+                const button = document.createElement('button');
+                button.className = 'match-item w-full p-3 rounded-lg bg-gray-50 text-neutral-text hover:bg-accent-light';
+                button.textContent = item.text;
+                button.dataset.id = item.id;
+                button.dataset.side = item.side;
+                button.onclick = handleMatchClick;
+                colRightEl.appendChild(button);
+            });
+        }
+
+        // Avanza a la siguiente parte o termina el juego
+        function nextPart() {
+            currentPart++;
+            if (currentPart < 6) {
+                renderPart();
+            } else {
+                // Juego completado
+                progressBarEl.style.width = '100%';
+                currentPartTextEl.textContent = `¡Ronda 6 de 6 completada!`;
+                matchInstructionsEl.textContent = '¡Excelente trabajo!';
+                matchGridEl.classList.add('hidden');
+                gameCompleteEl.classList.remove('hidden');
+            }
+        }
+        
+        // Función para empezar el juego
+        function startGame() {
+            currentPart = 0;
+            gameCompleteEl.classList.add('hidden');
+            matchGridEl.classList.remove('hidden');
+            renderPart();
+        }
+
+        // Iniciar el juego al cargar la ventana
+        window.onload = startGame;
+
+    </script>
+</body>
+</html>

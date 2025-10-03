@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hacer and Expressions - Spanish Lessons</title>
+    <!-- Carga de Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Configuración de la fuente y colores personalizados de Tailwind -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'flamingo-pink': '#FF79AC', // Rosa Flamenco
+                        'eerie-black': '#121118', // Negro Misterioso
+                    },
+                    fontFamily: {
+                        // Usando Inter como alternativa de alta calidad a Platform Medium
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Estilo para simular la fuente Platform Medium (con Inter) y asegurar que el cuerpo usa el color de texto correcto */
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #121118; /* Eerie Black */
+            background-color: white;
+            min-height: 100vh;
+        }
+
+        /* Estilo para un mejor espaciado en los elementos de vocabulario */
+        .vocab-item {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        /* Estilo para botones rosas con animación */
+        .pink-button {
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+        }
+        .pink-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(255, 121, 172, 0.3), 0 4px 6px -4px rgba(255, 121, 172, 0.3);
+            opacity: 0.9;
+        }
+
+        /* Estilo para el emparejamiento */
+        .match-term {
+             /* Estilo base para los términos en la Actividad 2 */
+            transition: all 0.15s ease;
+            user-select: none;
+            border: 1px solid theme('colors.flamingo-pink.DEFAULT');
+        }
+
+        .active-match {
+            outline: 3px solid #121118;
+            background-color: #FF79AC !important;
+            color: white !important;
+            border-color: #121118 !important;
+        }
+        .matched {
+            /* FIX: Usando !important para forzar el override del color rosa de Tailwind */
+            background-color: #F0FFF4 !important; /* bg-green-50 equivalent (Verde claro) */
+            color: #121118 !important;
+            cursor: default !important;
+            opacity: 0.9 !important; 
+            border: 1px solid #68D391 !important; /* border-green-400 equivalent (Borde verde) */
+        }
+        /* Estilo para ocultar el scroll horizontal en dispositivos pequeños en el área de contenido */
+        #content-view {
+            overflow-x: hidden;
+        }
+
+        /* Estilo para el espacio de respuesta resaltado en rosa */
+        .response-blank {
+            font-extrabold;
+            color: #FF79AC;
+            padding: 0 0.5rem;
+            border-bottom: 3px solid #FF79AC;
+            text-decoration: none; /* Asegura que no haya líneas adicionales si es un span */
+            display: inline-block;
+            min-width: 2rem;
+            text-align: center;
+        }
+        
+        /* Clases de feedback para Activity 1 */
+        .border-green-400 { border-color: #68D391; }
+        .bg-green-50 { background-color: #F0FFF4; }
+        .text-green-600 { color: #38A169; }
+
+        .border-red-400 { border-color: #FC8181; }
+        .bg-red-50 { background-color: #FFF5F5; }
+        .text-red-600 { color: #E53E3E; }
+    </style>
+</head>
+<body class="bg-white">
+
+    <div id="app" class="flex flex-col min-h-screen">
+        
+        <!-- Header/Main Title -->
+        <header class="bg-white pt-10 pb-6 shadow-md">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h1 class="text-4xl sm:text-5xl font-extrabold text-eerie-black text-center tracking-tight">
+                    <span class="text-flamingo-pink">Hacer</span> and Expressions with <span class="text-flamingo-pink">hacer</span>
+                </h1>
+                <p class="mt-2 text-xl text-eerie-black text-center font-medium">Mastering one of Spanish's most essential verbs.</p>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="flex-grow max-w-4xl mx-auto px-4 py-8 sm:px-6 lg:px-8 w-full">
+            
+            <!-- Navigation Buttons -->
+            <div id="nav-buttons" class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
+                <button onclick="setView('vocab')" class="pink-button bg-flamingo-pink text-white font-bold py-3 px-6 rounded-xl hover:bg-flamingo-pink/90">
+                    <span class="text-lg">Vocabulario nuevo / New Vocabulary</span>
+                </button>
+                <button onclick="setView('hacer')" class="pink-button bg-flamingo-pink text-white font-bold py-3 px-6 rounded-xl hover:bg-flamingo-pink/90">
+                    <span class="text-lg">Hacer and Expressions with hacer</span>
+                </button>
+                <button onclick="setView('activities')" class="pink-button bg-flamingo-pink text-white font-bold py-3 px-6 rounded-xl hover:bg-flamingo-pink/90">
+                    <span class="text-lg">Actividades / Activities</span>
+                </button>
+            </div>
+
+            <!-- View Container -->
+            <div id="content-view" class="bg-white p-6 rounded-xl border border-gray-100 shadow-lg min-h-[500px]">
+                <!-- Content will be rendered here by JavaScript -->
+            </div>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-eerie-black mt-8 py-6">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center">
+                <p class="text-white text-sm">
+                    © 2025 Spanish Lessons with María C. All rights reserved.
+                </p>
+                <!-- External Link Button -->
+                <a href="https://preply.com/en/tutor/5105409?utm_source=friend&utm_medium=ref&utm_campaign=stu_plg_plg_all_0_mul_xx_multiplesub_share-tutor-tutoring_1&utm_content=OTQ2NTAwNQ==" 
+                    target="_blank" 
+                    class="mt-4 pink-button bg-flamingo-pink text-eerie-black font-bold py-3 px-8 rounded-xl hover:bg-flamingo-pink/90 transition duration-300 transform scale-100 hover:scale-[1.02]">
+                    Find your Spanish class here.
+                </a>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        const contentView = document.getElementById('content-view');
+        let currentView = 'home';
+        
+        // --- Data Definitions ---
+
+        const newVocabulary = [
+            // Verbs and Expressions (2 per line goal)
+            [{ spanish: 'hacer', english: 'to make, to do' }, { spanish: 'ganar', english: 'to win, to earn' }],
+            [{ spanish: 'poner', english: 'to put' }, { spanish: 'hacer ejercicio', english: 'to exercise' }],
+            [{ spanish: 'salir', english: 'to leave, to go out' }, { spanish: 'hacer una pregunta', english: 'to ask a question' }],
+            [{ spanish: 'traer', english: 'to bring' }, { spanish: 'hacer una fiesta', english: 'to throw a party' }],
+            [{ spanish: 'explicar', english: 'to explain' }],
+            
+            // ¿Cómo está vs ¿Cómo es?
+            [{ spanish: '¿Cómo está Carla?', english: 'How is Carla?' }, { spanish: '¿Cómo es Carla?', english: 'What is Carla like?' }],
+
+            // Weather Nouns
+            [{ spanish: 'la temperatura', english: 'temperature' }, { spanish: 'el huracán', english: 'hurricane' }],
+            [{ spanish: 'los grados', english: 'degrees' }, { spanish: 'la precipitación', english: 'precipitation' }],
+
+            // Weather Expressions (2 per line goal)
+            [{ spanish: '¿Qué tiempo hace?', english: 'What’s the weather like?' }, { spanish: 'Truena.', english: 'It’s thundering.' }],
+            [{ spanish: 'Hace buen tiempo.', english: 'It’s good weather.' }, { spanish: 'Está nublado.', english: 'It’s cloudy.' }],
+            [{ spanish: 'Hace mal tiempo.', english: 'It’s bad weather.' }, { spanish: 'Está despejado.', english: 'It’s clear (cloudless).' }],
+            // MODIFICACIÓN 1: Llueve. ahora es "It's raining."
+            [{ spanish: 'Hace sol.', english: 'It’s sunny.' }, { spanish: 'Llueve.', english: "It's raining." }], 
+            // MODIFICACIÓN 2: Está lloviendo. ahora es "It is raining." (sin 'now')
+            [{ spanish: 'Hace viento.', english: 'It’s windy.' }, { spanish: 'Está lloviendo.', english: 'It is raining.' }], 
+            [{ spanish: 'Hace frío.', english: 'It’s cold.' }, { spanish: 'la lluvia', english: 'rain' }],
+            [{ spanish: 'Hace calor.', english: 'It’s hot.' }, { spanish: 'Hay niebla.', english: 'It’s foggy.' }],
+            [{ spanish: 'Hace fresco.', english: 'It’s cool.' }, { spanish: 'Llovizna.', english: 'It’s drizzling.' }],
+            [{ spanish: 'Está a veinticinco grados.', english: 'It’s twenty-five degrees.' }, { spanish: 'Nieva.', english: 'It’s snowing.' }],
+            [{ spanish: 'Hay tormenta.', english: 'There’s a storm.' }, { spanish: 'Hay hielo.', english: 'It’s icy.' }],
+            [{ spanish: 'Caen rayos.', english: 'It’s lightning.' }],
+        ];
+        
+        // Activity 1 (now Act 2)
+        const activity1Questions = [
+            // Note: The correct option uses '…' as a separator
+            { question: 'Hoy quiero ________ ejercicio a las seis y media de la tarde. Mañana ________ ejercicio con Victoria a las cinco de la tarde.', options: ['hacemos…hacer', 'hacer…vais a hacer', 'hacer…voy a hacer'], correct: 'hacer…voy a hacer' },
+            { question: '¿Cuál _______________ el nombre de tu nuevo vecino?', options: ['está', 'es', 'ser'], correct: 'es' },
+            { question: '¿Cómo ___________________________________ la personalidad [personality] de tu vecino?', options: ['está', 'es', 'ser'], correct: 'es' },
+            { question: 'Yo _____________________ la radio todos los días, pero no _________________ la televisión todos los días.', options: ['pongo…poner', 'pongo…ponéis', 'pongo…pongo'], correct: 'pongo…pongo' },
+            { question: '¿Cuáles ____________________ los ingredientes [ingredients] que necesitas comprar en el supermercado?', options: ['están', 'eres', 'son'], correct: 'son' },
+            { question: '¿ ______________________________ vecinos tienes?', options: ['Cuántos', 'Cuántas', 'Cuál'], correct: 'Cuántos' },
+            { question: 'Marisol y Valeria _______________________ todos los fines de semana con sus amigos.', options: ['salgan', 'salen', 'salimos'], correct: 'salen' },
+            { question: '¿Y tú? ¿Cuándo _________________________ con tus amigos?', options: ['sale', 'sales', 'salgo'], correct: 'sales' },
+            { question: '¿Y ustedes? ¿Cuándo ________________________ los libros para estudiar?', options: ['traigo', 'trae', 'traen'], correct: 'traen' }
+        ];
+
+        // Activity 2: Matching Vocabulary (Weather)
+        // This is the full list of 25 pairs used for the 5-stage matching activity.
+        const weatherVocabPairs = [
+            { id: 1, spanish: 'la temperatura', english: 'temperature' },
+            { id: 2, spanish: 'el huracán', english: 'hurricane' },
+            { id: 3, spanish: 'los grados', english: 'degrees' },
+            { id: 4, spanish: 'la precipitación', english: 'precipitation' },
+            { id: 5, spanish: '¿Qué tiempo hace?', english: 'What’s the weather like?' },
+
+            // Stage 2 (IDs 6-10)
+            { id: 6, spanish: 'Truena.', english: 'It’s thundering.' },
+            { id: 7, spanish: 'Hace buen tiempo.', english: 'It’s good weather.' },
+            { id: 8, spanish: 'Está nublado.', english: 'It’s cloudy.' },
+            { id: 9, spanish: 'Hace mal tiempo.', english: 'It’s bad weather.' },
+            { id: 10, spanish: 'Está despejado.', english: 'It’s clear (cloudless).' },
+            
+            // Stage 3 (IDs 11-15) - Contains 'Llueve.'
+            { id: 11, spanish: 'Hace sol.', english: 'It’s sunny.' },
+            // MODIFICACIÓN 1 APLICADA AQUÍ: 'It rains.' -> "It's raining."
+            { id: 12, spanish: 'Llueve.', english: "It's raining." }, 
+            { id: 13, spanish: 'Hace viento.', english: 'It’s windy.' },
+            { id: 14, spanish: 'la lluvia', english: 'rain' }, 
+            { id: 15, spanish: 'Hace frío.', english: 'It’s cold.' },
+
+            // Stage 4 (IDs 16-20) - Contains 'Está lloviendo.'
+            // MODIFICACIÓN 2 APLICADA AQUÍ: 'It is raining (now).' -> 'It is raining.'
+            { id: 16, spanish: 'Está lloviendo.', english: 'It is raining.' }, 
+            { id: 17, spanish: 'Hace calor.', english: 'It’s hot.' },
+            { id: 18, spanish: 'Hay niebla.', english: 'It’s foggy.' },
+            { id: 19, spanish: 'Hace fresco.', english: 'It’s cool.' },
+            { id: 20, spanish: 'Llovizna.', english: 'It’s drizzling.' },
+
+            // Stage 5 (IDs 21-25)
+            { id: 21, spanish: 'Está a veinticinco grados.', english: 'It’s twenty-five degrees.' },
+            { id: 22, spanish: 'Nieva.', english: 'It’s snowing.' },
+            { id: 23, spanish: 'Hay tormenta.', english: 'There’s a storm.' },
+            { id: 24, spanish: 'Hay hielo.', english: 'It’s icy.' },
+            { id: 25, spanish: 'Caen rayos.', english: 'It’s lightning.' },
+        ];
+
+        // --- View Rendering Functions ---
+
+        const renderHome = () => {
+            contentView.innerHTML = `
+                <div class="space-y-6 text-eerie-black">
+                    <h2 class="text-3xl font-extrabold text-flamingo-pink mb-4 text-center">Welcome!</h2>
+                    <p class="text-lg">This page is dedicated to helping English speakers master the essential Spanish verb <strong>hacer</strong> (to make, to do) and its many common expressions, especially those related to the weather.</p>
+                    <p class="text-lg">Click on any of the buttons above to start learning new vocabulary, review important grammar rules, or test your knowledge with interactive activities!</p>
+                    <p class="text-lg font-semibold">Ready to start? Choose a section now!</p>
+                </div>
+            `;
+        };
+        
+        const renderVocab = () => {
+            let html = `
+                <h2 class="text-3xl font-bold text-eerie-black mb-6 text-center">Vocabulario nuevo / New Vocabulary</h2>
+                <div class="space-y-4">
+            `;
+            
+            newVocabulary.forEach(line => {
+                html += '<div class="vocab-item p-3 border-b border-gray-100">';
+                line.forEach(item => {
+                    html += `<p class="text-eerie-black text-lg"><strong class="text-flamingo-pink">${item.spanish}</strong> – ${item.english}</p>
+                    `;
+                });
+                html += '</div>';
+            });
+
+            html += '</div>';
+            contentView.innerHTML = html;
+        };
+
+        const renderHacerInfo = () => {
+            contentView.innerHTML = `
+                <h2 class="text-3xl font-bold text-eerie-black mb-6 text-center">Hacer and Expressions with hacer</h2>
+
+                <div class="space-y-6 text-eerie-black text-lg">
+                    <h3 class="2xl font-semibold text-flamingo-pink border-b pb-2">Hacer and Expressions with hacer</h3>
+                    <p>The verb <strong>hacer</strong> means “to make” or “to do,” and it’s one of the most commonly used verbs in Spanish. Beyond its normal use (e.g., “I always do my work” is <strong>Siempre hago mi trabajo</strong>), <strong>hacer</strong> is used in a number of expressions, such as <strong>hacer una pregunta</strong>, which is “to ask a question,” and <strong>hacer una fiesta</strong>, which is “to throw a party.” <strong>Hacer</strong> is also used with many of the weather expressions (e.g., <strong>¿Qué tiempo hace?</strong> is “What is the weather like?”; <strong>Hace sol</strong> is “It’s sunny”; <strong>Hace mal tiempo</strong> is “It’s bad weather”). All present tense endings for <strong>hacer</strong> are regular; the only unusual form of the verb is the <strong>yo</strong> form (<strong>hago</strong>), which has a <strong>g</strong>.</p>
+                    
+                    <h3 class="2xl font-semibold text-flamingo-pink border-b pb-2">Verbs Conjugated like hacer</h3>
+                    <p>Verbs conjugated like <strong>hacer</strong> (meaning that they also use regular endings and have a <strong>g</strong> in the <strong>yo</strong> form) include <strong>poner</strong> [to put], <strong>salir</strong> [to leave, to go out], and <strong>traer</strong> [to bring]. The <strong>yo</strong> forms for these verbs are <strong>pongo</strong>, <strong>salgo</strong>, and <strong>traigo</strong>.</p>
+                    
+                    <h3 class="2xl font-semibold text-flamingo-pink border-b pb-2">Interrogatives</h3>
+                    <p>The meaning of <strong>cómo</strong> is different when used with <strong>estar</strong> than it is when used with <strong>ser</strong> because <strong>estar</strong> expresses a state or condition, while <strong>ser</strong> expresses an inherent characteristic of someone or something. <strong>¿Cómo están las chicas?</strong> asks “How are the girls?” while <strong>¿Cómo son las chicas?</strong> asks “What are the girls like?”</p>
+                </div>
+            `;
+        };
+
+        // --- Activity Logic ---
+        
+        let activity1Visible = false; // Visibility state for Activity 1 solutions
+        let activity2State = { // State for Activity 2 (Matching)
+            stage: 1,
+            selectedSpanish: null,
+            selectedEnglish: null,
+            matches: [], // Array of matched IDs
+            currentPairs: [],
+            isComplete: false, // Indica si la actividad está totalmente terminada
+        };
+        
+        // Activity 1: Multiple Choice (Previously Activity 2)
+        const renderActivity1 = () => {
+            let html = `
+                <div class="space-y-6 pt-8">
+                    <h3 class="text-2xl font-bold text-flamingo-pink">Activity 1: Completa las frases</h3>
+                    <p class="text-lg text-eerie-black">Completa las frases con la opción apropiada. / Complete the sentences with the appropriate option.</p>
+                    
+                    <form id="activity1-form" class="space-y-6">
+                        ${activity1Questions.map((q, qIndex) => {
+                            let blankCounter = 0;
+                            // Reemplaza todos los '________' con un span de respuesta de color rosa y un ID único
+                            const questionHtml = q.question.replace(/_______+/g, () => {
+                                // Usa el contador para generar IDs únicos (q1-blank-0-0, q1-blank-0-1, etc.)
+                                return `<span id="q1-blank-${qIndex}-${blankCounter++}" class="response-blank">[____]</span>`;
+                            });
+
+                            return `
+                                <div id="q1-container-${qIndex}" class="p-4 border border-gray-200 rounded-lg bg-gray-50 activity-1-question-container">
+                                    <p class="text-lg font-semibold text-eerie-black mb-3">${qIndex + 1}. ${questionHtml}</p>
+                                    <div class="space-y-2">
+                                        ${q.options.map((option, oIndex) => `
+                                            <div class="flex items-center">
+                                                <input type="radio" id="q1-${qIndex}-${oIndex}" name="q1-${qIndex}" value="${option}" 
+                                                        onclick="selectActivity1Option(${qIndex}, '${option.replace(/'/g, "\\'")}')"
+                                                        class="h-4 w-4 text-flamingo-pink border-gray-300 focus:ring-flamingo-pink">
+                                                <label for="q1-${qIndex}-${oIndex}" class="ml-3 text-eerie-black">${String.fromCharCode(97 + oIndex)}) ${option.replace('…', '...')} </label>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                    <!-- Feedback element. Start hidden, JS manages visibility and color -->
+                                    <p id="q1-feedback-${qIndex}" class="hidden mt-2 text-sm font-bold"></p> 
+                                </div>
+                            `;
+                        }).join('')}
+                    </form>
+                    
+                    <button onclick="toggleActivity1Solutions()" class="pink-button bg-flamingo-pink text-white font-bold py-2 px-6 rounded-xl text-lg w-full md:w-auto">
+                        <span id="activity1-toggle-text">Soluciones / Solutions</span>
+                    </button>
+
+                    <div id="activity1-solutions" class="${activity1Visible ? '' : 'hidden'} mt-4 p-4 border-2 border-flamingo-pink bg-pink-50 rounded-xl space-y-2">
+                        <h4 class="font-bold text-xl text-eerie-black">Soluciones:</h4>
+                        ${activity1Questions.map((q, index) => `<p class="text-eerie-black"><span class="font-semibold">${index + 1}.</span> ${q.correct.replace('…', '...')} (Correcto: ${q.correct.replace('…', '...')})</p>`).join('')}
+                    </div>
+                </div>
+            `;
+            return html;
+        };
+
+        const selectActivity1Option = (qIndex, selectedValue) => {
+            const q = activity1Questions[qIndex];
+            const isCorrect = selectedValue === q.correct;
+            const feedbackEl = document.getElementById(`q1-feedback-${qIndex}`);
+            const questionDiv = document.getElementById(`q1-container-${qIndex}`);
+            
+            // 1. Clear previous option highlighting and container colors
+            // Use querySelectorAll on the specific question container
+            const allLabels = questionDiv.querySelectorAll('label');
+            allLabels.forEach(label => {
+                label.classList.remove('text-green-600', 'text-red-600', 'font-bold');
+            });
+            
+            questionDiv.classList.remove('border-green-400', 'border-red-400', 'bg-green-50', 'bg-red-50', 'border-gray-200', 'bg-gray-50');
+            
+            // Re-apply default styling classes that might have been removed
+            questionDiv.classList.add('border-gray-200', 'bg-gray-50');
+
+            // 2. Fill the blanks
+            const parts = selectedValue.split('…').map(part => part.trim());
+
+            // Clear and refill with selected parts
+            // This is robust because the replacement logic in renderActivity1 created q1-blank-qIndex-0, q1-blank-qIndex-1, etc.
+            let filledBlanks = 0;
+            const blankElements = questionDiv.querySelectorAll('.response-blank');
+            
+            // Reset all blanks to placeholder first
+            blankElements.forEach(blank => {
+                blank.textContent = '[____]';
+            });
+
+            // Then fill the blanks sequentially
+            parts.forEach((part, partIndex) => {
+                const blank = document.getElementById(`q1-blank-${qIndex}-${partIndex}`);
+                if (blank) {
+                    blank.textContent = part.replace('…', '...');
+                    filledBlanks++;
+                }
+            });
+
+            // 3. Show feedback
+            feedbackEl.classList.remove('hidden', 'text-green-600', 'text-red-600');
+
+            // Find the selected label to highlight it specifically
+            const selectedInput = questionDiv.querySelector(`input[name="q1-${qIndex}"][value="${selectedValue}"]`);
+            const selectedLabel = selectedInput ? selectedInput.nextElementSibling : null;
+
+
+            if (isCorrect) {
+                feedbackEl.textContent = '¡Correcto! (Correct)';
+                feedbackEl.classList.add('text-green-600');
+                questionDiv.classList.add('border-green-400', 'bg-green-50');
+                questionDiv.classList.remove('border-gray-200', 'bg-gray-50'); // Remove default
+                if (selectedLabel) selectedLabel.classList.add('text-green-600', 'font-bold');
+            } else {
+                feedbackEl.textContent = 'Incorrecto. Inténtalo de nuevo. (Incorrect, try again.)';
+                feedbackEl.classList.add('text-red-600');
+                questionDiv.classList.add('border-red-400', 'bg-red-50');
+                questionDiv.classList.remove('border-gray-200', 'bg-gray-50'); // Remove default
+                if (selectedLabel) selectedLabel.classList.add('text-red-600', 'font-bold');
+            }
+        };
+
+        const toggleActivity1Solutions = () => {
+            activity1Visible = !activity1Visible;
+            document.getElementById('activity1-solutions').classList.toggle('hidden', !activity1Visible);
+            document.getElementById('activity1-toggle-text').textContent = activity1Visible 
+                ? 'Ocultar Soluciones / Hide Solutions' 
+                : 'Soluciones / Solutions';
+        };
+
+        // Activity 2: Matching (Previously Activity 3)
+        let activity2Visible = false; // Visibility state for Activity 2 solutions
+
+        const shuffleArray = (array) => {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        };
+
+        const renderActivity2Stage = () => {
+            
+            // Si la actividad está completamente terminada, muestra el mensaje final.
+            if (activity2State.isComplete) {
+                 return `
+                    <div class="space-y-6 pt-8 border-t mt-12 text-center">
+                        <h3 class="text-3xl font-extrabold text-flamingo-pink">¡Actividad 2 Terminada!</h3>
+                        <p class="text-2xl font-bold text-green-600 p-6 border-2 border-green-400 rounded-xl bg-green-50 shadow-md">
+                            🎉 ¡Felicidades! Has completado todas las ${weatherVocabPairs.length} parejas de vocabulario. ¡Excelente trabajo! 🎉
+                        </p>
+                        <p class="text-lg text-eerie-black">Si quieres practicar de nuevo, simplemente sal y vuelve a entrar a la sección de **Actividades**.</p>
+                    </div>
+                `;
+            }
+
+            const stage = activity2State.stage;
+            const start = (stage - 1) * 5;
+            const end = stage * 5;
+            // Slice the global list to get only the 5 pairs for the current stage
+            activity2State.currentPairs = weatherVocabPairs.slice(start, end);
+            
+            // Filtra solo los elementos que *no* están en activity2State.matches (aunque en este punto, matches debería estar vacío si no está completa la etapa)
+            const stagePairs = activity2State.currentPairs.filter(p => !activity2State.matches.includes(p.id));
+            
+            // Si stagePairs está vacío, significa que se acaba de completar la etapa y solo se debe mostrar el botón Siguiente.
+            const spanishTerms = shuffleArray([...stagePairs.map(p => ({ id: p.id, term: p.spanish, type: 'spanish' }))]);
+            const englishTerms = shuffleArray([...stagePairs.map(p => ({ id: p.id, term: p.english, type: 'english' }))]);
+
+            // Mapea *todos* los pares de la etapa para poder mostrar los ya emparejados.
+            // Nota: Se utilizan stagePairs para asegurar que solo se muestran los términos de la etapa actual.
+            const allSpanishTerms = shuffleArray([...activity2State.currentPairs.map(p => ({ id: p.id, term: p.spanish, type: 'spanish' }))]);
+            const allEnglishTerms = shuffleArray([...activity2State.currentPairs.map(p => ({ id: p.id, term: p.english, type: 'english' }))]);
+
+
+            let html = `
+                <div class="space-y-6 pt-8 border-t mt-12">
+                    <h3 class="text-2xl font-bold text-flamingo-pink">Activity 2: Matching Vocabulary (Stage ${stage} of 5)</h3>
+                    <p class="text-lg text-eerie-black">Empareja el vocabulario. Selecciona un término en español y su traducción en inglés para emparejar. / Match the vocabulary. Select a Spanish term and its English translation to match.</p>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <!-- Spanish Column -->
+                        <div id="spanish-column" class="space-y-2">
+                            <h4 class="text-xl font-bold text-eerie-black border-b border-eerie-black pb-1 mb-2">Español</h4>
+                            ${allSpanishTerms.map(item => `
+                                <div id="match-${item.id}-${item.type}" 
+                                    onclick="handleMatchClick(${item.id}, '${item.type}')" 
+                                    class="p-3 bg-pink-100 border border-flamingo-pink/50 rounded-lg cursor-pointer hover:bg-pink-200 transition duration-150 text-eerie-black text-center match-term ${activity2State.matches.includes(item.id) ? 'matched' : ''}">
+                                    ${item.term}
+                                </div>
+                            `).join('')}
+                        </div>
+                        
+                        <!-- English Column -->
+                        <div id="english-column" class="space-y-2">
+                            <h4 class="text-xl font-bold text-eerie-black border-b border-eerie-black pb-1 mb-2">English</h4>
+                            ${allEnglishTerms.map(item => `
+                                <div id="match-${item.id}-${item.type}" 
+                                    onclick="handleMatchClick(${item.id}, '${item.type}')" 
+                                    class="p-3 bg-pink-100 border border-flamingo-pink/50 rounded-lg cursor-pointer hover:bg-pink-200 transition duration-150 text-eerie-black text-center match-term ${activity2State.matches.includes(item.id) ? 'matched' : ''}">
+                                    ${item.term}
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <div id="match-message" class="text-center font-bold text-xl h-6"></div>
+
+                    ${activity2State.matches.length === 5 ? `
+                        <p class="text-xl font-bold text-eerie-black text-center mt-4 p-2">¡Etapa ${stage} completada!</p>
+                        <button onclick="advanceActivity2Stage()" class="pink-button bg-flamingo-pink text-white font-bold py-2 px-6 rounded-xl text-lg w-full md:w-auto mt-2">
+                            ${stage < 5 ? `Siguiente Etapa (${stage + 1} de 5) →` : 'Terminar Actividad 2 🏆'}
+                        </button>
+                    ` : ''}
+
+                </div>
+            `;
+            return html;
+        };
+
+        const handleMatchClick = (id, type) => {
+            const messageEl = document.getElementById('match-message');
+            messageEl.textContent = '';
+            
+            if (activity2State.matches.includes(id)) return; // Already matched
+            
+            const element = document.getElementById(`match-${id}-${type}`);
+            
+            // Remove active class from the *other* column's previously selected item if it exists
+            if (type === 'spanish') {
+                if (activity2State.selectedSpanish) {
+                    // Check if element exists before attempting to remove class
+                    const prevElement = document.getElementById(`match-${activity2State.selectedSpanish}-spanish`);
+                    if (prevElement) prevElement.classList.remove('active-match');
+                }
+                activity2State.selectedSpanish = id;
+                element.classList.add('active-match');
+            } else { // type === 'english'
+                if (activity2State.selectedEnglish) {
+                    // Check if element exists before attempting to remove class
+                    const prevElement = document.getElementById(`match-${activity2State.selectedEnglish}-english`);
+                    if (prevElement) prevElement.classList.remove('active-match');
+                }
+                activity2State.selectedEnglish = id;
+                element.classList.add('active-match');
+            }
+
+            // Check for match
+            if (activity2State.selectedSpanish && activity2State.selectedEnglish) {
+                const selectedSpanishElement = document.getElementById(`match-${activity2State.selectedSpanish}-spanish`);
+                const selectedEnglishElement = document.getElementById(`match-${activity2State.selectedEnglish}-english`);
+
+                if (activity2State.selectedSpanish === activity2State.selectedEnglish) {
+                    messageEl.textContent = '¡Correcto! / Correct!';
+                    activity2State.matches.push(id);
+                    
+                    // Apply 'matched' class and remove 'active' class
+                    selectedSpanishElement.classList.remove('active-match');
+                    selectedSpanishElement.classList.add('matched');
+                    selectedEnglishElement.classList.remove('active-match');
+                    selectedEnglishElement.classList.add('matched');
+
+                    activity2State.selectedSpanish = null;
+                    activity2State.selectedEnglish = null;
+
+                    // Re-render the activity to show the "Next Stage" button if all 5 are matched
+                    if (activity2State.matches.length === 5) {
+                        setTimeout(renderActivities, 500); 
+                    }
+
+                } else {
+                    messageEl.textContent = 'Incorrecto. Inténtalo de nuevo. / Incorrect, Try again.';
+                    
+                    // Remove active class from both after a brief pause
+                    setTimeout(() => {
+                        selectedSpanishElement?.classList.remove('active-match');
+                        selectedEnglishElement?.classList.remove('active-match');
+                        activity2State.selectedSpanish = null;
+                        activity2State.selectedEnglish = null;
+                        messageEl.textContent = ''; // Clear message after a brief pause
+                    }, 800);
+                }
+            }
+        };
+
+        const advanceActivity2Stage = () => {
+             // Esta función es llamada SOLO por el botón "Siguiente Etapa" que solo aparece si matches.length === 5.
+            if (activity2State.stage < 5) {
+                activity2State.stage++;
+                activity2State.matches = []; // Reset matches for the new stage
+            } else {
+                activity2State.isComplete = true; // Finalización total
+            }
+            // Llama a renderActivities para dibujar la nueva etapa o la pantalla de finalización.
+            renderActivities();
+        };
+        
+        const renderActivities = () => {
+            
+            // Los avances de etapa y la finalización son manejados por advanceActivity2Stage.
+            // Aquí solo nos aseguramos de resetear el estado si es la primera vez que se entra a la vista.
+            
+            let html = `<h2 class="text-3xl font-bold text-eerie-black mb-6 text-center">Actividades / Activities</h2>`;
+            
+            // Activity 1 is independent
+            html += renderActivity1(); 
+            
+            // Activity 2 is rendered below Activity 1
+            html += renderActivity2Stage(); 
+            
+            contentView.innerHTML = html;
+        };
+
+        // --- Main Controller ---
+
+        const setView = (view) => {
+            currentView = view;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            // Reset state for activities when navigating away
+            activity1Visible = false; 
+            
+            // When navigating to 'activities', always reset Activity 2 to Stage 1.
+            if (view === 'activities') {
+                activity2State.stage = 1;
+                activity2State.isComplete = false; // Asegura que se reinicie
+                activity2State.matches = [];
+                activity2State.selectedSpanish = null;
+                activity2State.selectedEnglish = null;
+            }
+            
+            // Render the selected view
+            switch (view) {
+                case 'vocab':
+                    renderVocab();
+                    break;
+                case 'hacer':
+                    renderHacerInfo();
+                    break;
+                case 'activities':
+                    renderActivities();
+                    break;
+                default:
+                    renderHome();
+                    break;
+            }
+        };
+        
+        // Initial render
+        window.onload = () => {
+            setView('home');
+        };
+
+    </script>
+</body>
+</html>

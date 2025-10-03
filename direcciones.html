@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clases de Español con María C.</title>
+    <!-- Carga de Tailwind CSS para el diseño -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /*
+        El usuario solicitó 'Platform Medium Font'. Como es una fuente comercial,
+        usaremos una pila de fuentes sans-serif limpia y moderna para el mejor
+        rendimiento y apariencia en el navegador. La fuente predeterminada será Inter (Tailwind).
+        */
+        body {
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+            background-color: #FFFFFF; /* Color de fondo blanco */
+        }
+        .text-eerie-black {
+            color: #121118; /* Negro Misterioso */
+        }
+        .bg-flamingo-pink {
+            background-color: #FF79AC; /* Rosa Flamenco */
+        }
+        .hover-bg-flamingo-pink:hover {
+            background-color: #ff5f9e; /* Un tono ligeramente más oscuro para el efecto hover */
+        }
+        .border-flamingo-pink {
+             border-color: #FF79AC;
+        }
+
+        /* Estilo para simular el sombreado suave de las tarjetas */
+        .card-shadow {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Estilo personalizado para el botón CTA principal */
+        .cta-button {
+            display: inline-block;
+            padding: 0.75rem 2rem;
+            border-radius: 9999px; /* Totalmente redondeado */
+            font-weight: 700;
+            text-decoration: none;
+            transition: transform 0.15s, background-color 0.15s;
+        }
+        .cta-button:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Estilo para las listas desplegables del quiz de conversación (Actividad 1) */
+        .quiz-select {
+            border: 2px solid #FF79AC;
+            border-radius: 0.5rem;
+            padding: 0.25rem 0.5rem;
+            font-weight: 600;
+            color: #121118;
+            background-color: #FFF0F5; /* Un rosa muy claro para el fondo del select */
+            appearance: none; /* Oculta el estilo nativo para mayor consistencia */
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%23FF79AC'%3e%3cpath d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 0.5rem center;
+            background-size: 1.5em;
+            cursor: pointer;
+        }
+
+        /* Estilo para los botones de emparejamiento (Actividad 2) */
+        .matching-button {
+            cursor: pointer;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.1s ease-in-out;
+            border: 2px solid #FF79AC; /* Borde rosa por defecto */
+            background-color: white;
+            color: #121118;
+            user-select: none; /* Previene selección de texto */
+        }
+        /* Estilo para botones deshabilitados (emparejados correctamente) */
+        .matching-button[disabled] {
+            cursor: default;
+            background-color: #34D399; /* Verde esmeralda (Green-500) */
+            color: white;
+            border-color: #10B981; /* Borde oscuro */
+            box-shadow: none;
+        }
+        /* Estilo para el botón seleccionado temporalmente */
+        .matching-selected {
+            background-color: #D1FAE5; /* Verde Claro (Green-100/200) */
+            box-shadow: 0 0 0 3px #6EE7B7; /* Anillo de enfoque verde */
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased text-eerie-black">
+
+    <!-- Encabezado / Título de la Lección -->
+    <header class="py-12 px-6 bg-white border-b border-gray-100">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="text-4xl sm:text-5xl font-extrabold text-eerie-black leading-tight">
+                Lección: Preguntar y Dar Direcciones
+            </h1>
+            <p class="mt-2 text-xl text-gray-500">
+                Aprende a moverte por cualquier ciudad de habla hispana.
+            </p>
+        </div>
+    </header>
+
+    <!-- Contenido Principal de la Lección -->
+    <main class="flex-grow max-w-4xl mx-auto px-6 py-12 w-full">
+
+        <!-- Sección de Preguntas Comunes (se mantiene) -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold mb-6 border-b-4 pb-2 border-flamingo-pink inline-block">
+                Preguntas Clave
+            </h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-lg">
+                <p>— ¿Dónde está…? <span class="text-gray-500">(Where is...?)</span></p>
+                <p>— ¿Dónde queda...? <span class="text-gray-500">(Where is...?)</span></p>
+                <p>— ¿Cómo llego a…? <span class="text-gray-500">(How do I get to...?)</span></p>
+                <p>— ¿Está cerca o lejos? <span class="text-gray-500">(Is it near or far?)</span></p>
+                <p>— ¿Hay una farmacia cerca? <span class="text-gray-500">(Is there a pharmacy nearby?)</span></p>
+            </div>
+        </section>
+
+        <!-- Sección de Preposiciones de Dirección (se mantiene) -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold mb-6 border-b-4 pb-2 border-flamingo-pink inline-block">
+                Preposiciones de Direcciones
+            </h2>
+            <div class="space-y-4">
+                <!-- Ítems de preposiciones... -->
+                <div class="p-4 rounded-lg card-shadow border border-gray-100"><p class="font-semibold text-lg">Delante de <span class="text-flamingo-pink">— El banco está <strong class="text-eerie-black">delante de</strong> la farmacia.</span></p><p class="text-sm text-gray-500 italic">In front of — The bank is in front of the pharmacy.</p></div>
+                <div class="p-4 rounded-lg card-shadow border border-gray-100"><p class="font-semibold text-lg">Detrás de <span class="text-flamingo-pink">— La escuela está <strong class="text-eerie-black">detrás del</strong> parque.</span></p><p class="text-sm text-gray-500 italic">Behind — The school is behind the park.</p></div>
+                <div class="p-4 rounded-lg card-shadow border border-gray-100"><p class="font-semibold text-lg">Enfrente de <span class="text-flamingo-pink">— El museo está <strong class="text-eerie-black">enfrente de</strong> la plaza.</span></p><p class="text-sm text-gray-500 italic">Across from — The museum is across from the square.</p></div>
+                <div class="p-4 rounded-lg card-shadow border border-gray-100"><p class="font-semibold text-lg">Al lado de <span class="text-flamingo-pink">— El restaurante está <strong class="text-eerie-black">al lado del</strong> cine.</span></p><p class="text-sm text-gray-500 italic">Next to — The restaurant is next to the cinema.</p></div>
+                <div class="p-4 rounded-lg card-shadow border border-gray-100"><p class="font-semibold text-lg">Entre <span class="text-flamingo-pink">— El café está <strong class="text-eerie-black">entre</strong> la librería y la zapatería.</span></p><p class="text-sm text-gray-500 italic">Between — The café is between the bookstore and the shoe store.</p></div>
+                <div class="p-4 rounded-lg card-shadow border border-gray-100"><p class="font-semibold text-lg">Cerca de <span class="text-flamingo-pink">— La estación de tren está <strong class="text-eerie-black">cerca de</strong> mi casa.</span></p><p class="text-sm text-gray-500 italic">Near — The train station is near my house.</p></div>
+                <div class="p-4 rounded-lg card-shadow border border-gray-100"><p class="font-semibold text-lg">Lejos de <span class="text-flamingo-pink">— El hospital está <strong class="text-eerie-black">lejos del</strong> centro comercial.</span></p><p class="text-sm text-gray-500 italic">Far from — The hospital is far from the shopping center.</p></div>
+                <div class="p-4 rounded-lg card-shadow border border-gray-100"><p class="font-semibold text-lg">A la derecha de <span class="text-flamingo-pink">— El supermercado está <strong class="text-eerie-black">a la derecha de</strong> la panadería.</span></p><p class="text-sm text-gray-500 italic">To the right of — The supermarket is to the right of the bakery.</p></div>
+                <div class="p-4 rounded-lg card-shadow border border-gray-100"><p class="font-semibold text-lg">A la izquierda de <span class="text-flamingo-pink">— El teatro está <strong class="text-eerie-black">a la izquierda de</strong> la universidad.</span></p><p class="text-sm text-gray-500 italic">To the left of — The theater is to the left of the university.</p></div>
+                <div class="p-4 rounded-lg card-shadow border border-gray-100"><p class="font-semibold text-lg">En el centro de <span class="text-flamingo-pink">— La plaza está <strong class="text-eerie-black">en el centro de</strong> la ciudad.</span></p><p class="text-sm text-gray-500 italic">In the center of — The square is in the center of the city.</p></div>
+                <div class="p-4 rounded-lg card-shadow border border-gray-100"><p class="font-semibold text-lg">En la esquina de <span class="text-flamingo-pink">— El banco está <strong class="text-eerie-black">en la esquina de</strong> la calle principal.</span></p><p class="text-sm text-gray-500 italic">On the corner of — The bank is on the corner of the main street.</p></div>
+                <div class="p-4 rounded-lg card-shadow border border-gray-100"><p class="font-semibold text-lg">Al final de <span class="text-flamingo-pink">— La estación de autobuses está <strong class="text-eerie-black">al final de</strong> esta calle.</span></p><p class="text-sm text-gray-500 italic">At the end of — The bus station is at the end of this street.</p></div>
+                <div class="p-4 rounded-lg card-shadow border border-gray-100"><p class="font-semibold text-lg">Junto a <span class="text-flamingo-pink">— El kiosco está <strong class="text-eerie-black">junto al</strong> parque.</span></p><p class="text-sm text-gray-500 italic">Next to/Beside — The kiosk is next to the park.</p></div>
+                <div class="p-4 rounded-lg card-shadow border border-gray-100"><p class="font-semibold text-lg">A lo largo de <span class="text-flamingo-pink">— Hay árboles <strong class="text-eerie-black">a lo largo de</strong> la avenida.</span></p><p class="text-sm text-gray-500 italic">Along — There are trees along the avenue.</p></div>
+                <div class="p-4 rounded-lg card-shadow border border-gray-100"><p class="font-semibold text-lg">Sobre <span class="text-flamingo-pink">— El puente está <strong class="text-eerie-black">sobre</strong> el río.</span></p><p class="text-sm text-gray-500 italic">Over — The bridge is over the river.</p></div>
+            </div>
+        </section>
+
+        <!-- Sección de Actividad Interactiva (Quiz de Conversación) -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold mb-6 border-b-4 pb-2 border-flamingo-pink inline-block">
+                Actividad 1: Completa la Conversación
+            </h2>
+            <div id="quiz-container" class="space-y-6">
+                
+                <!-- Pregunta 1 -->
+                <div class="p-4 rounded-lg border-2 border-flamingo-pink flex flex-col md:flex-row md:items-start justify-between">
+                    <div class="w-full md:w-3/4">
+                        <p class="font-semibold">¿Cómo llego a la estación de tren?</p>
+                        <p class="ml-4 mt-2">
+                            La estación de tren está a dos cuadras de aquí. Ve todo recto y gira a la
+                            <select id="q1" class="quiz-select">
+                                <option value="">...</option>
+                                <option value="izquierda">izquierda</option>
+                                <option value="derecha">derecha</option>
+                            </select>.
+                        </p>
+                        <p class="text-sm text-gray-500 italic mt-1">The train station is two blocks away from here. Go straight ahead and turn left.</p>
+                    </div>
+                    <div id="feedback-q1" class="md:w-1/4 pt-2 md:pt-0 md:pl-4 text-right"></div>
+                </div>
+
+                <!-- Pregunta 2 -->
+                <div class="p-4 rounded-lg border-2 border-flamingo-pink flex flex-col md:flex-row md:items-start justify-between">
+                    <div class="w-full md:w-3/4">
+                        <p class="font-semibold">¿Dónde está el supermercado más cercano?</p>
+                        <p class="ml-4 mt-2">
+                            El supermercado está
+                            <select id="q2" class="quiz-select">
+                                <option value="">...</option>
+                                <option value="detrás">detrás</option>
+                                <option value="al lado">al lado</option>
+                                <option value="enfrente">enfrente</option>
+                            </select>
+                            de la iglesia, al lado de la panadería.
+                        </p>
+                        <p class="text-sm text-gray-500 italic mt-1">The supermarket is in front of the church, next to the bakery.</p>
+                    </div>
+                    <div id="feedback-q2" class="md:w-1/4 pt-2 md:pt-0 md:pl-4 text-right"></div>
+                </div>
+
+                <!-- Ejemplo 3 (Mantener como solo ejemplo de conversación, sin quiz) -->
+                <div class="p-4 rounded-lg border border-gray-300 bg-gray-50">
+                    <p class="font-semibold">¿Hay un banco por aquí?</p>
+                    <p class="ml-4 mt-2">
+                        Sí, hay un banco en esta calle, justo después del semáforo.
+                    </p>
+                    <p class="text-sm text-gray-500 italic mt-1">Yes, there is a bank on this street, just past the traffic light.</p>
+                </div>
+
+                <!-- Pregunta 4 -->
+                <div class="p-4 rounded-lg border-2 border-flamingo-pink flex flex-col md:flex-row md:items-start justify-between">
+                    <div class="w-full md:w-3/4">
+                        <p class="font-semibold">¿Está lejos la farmacia?</p>
+                        <p class="ml-4 mt-2">
+                            No, la farmacia
+                            <select id="q4" class="quiz-select">
+                                <option value="">...</option>
+                                <option value="es">es</option>
+                                <option value="está">está</option>
+                            </select>
+                            a solo cinco minutos caminando.
+                        </p>
+                        <p class="text-sm text-gray-500 italic mt-1">No, the pharmacy is just a five-minute walk away.</p>
+                    </div>
+                    <div id="feedback-q4" class="md:w-1/4 pt-2 md:pt-0 md:pl-4 text-right"></div>
+                </div>
+
+                <!-- Pregunta 5 -->
+                <div class="p-4 rounded-lg border-2 border-flamingo-pink flex flex-col md:flex-row md:items-start justify-between">
+                    <div class="w-full md:w-3/4">
+                        <p class="font-semibold">¿En qué dirección queda el parque?</p>
+                        <p class="ml-4 mt-2">
+                            El parque queda hacia el norte,
+                            <select id="q5" class="quiz-select">
+                                <option value="">...</option>
+                                <option value="en frente">en frente</option>
+                                <option value="detrás">detrás</option>
+                                <option value="al lado">al lado</option>
+                            </select>
+                            del museo.
+                        </p>
+                        <p class="text-sm text-gray-500 italic mt-1">The park is to the north, behind the museum.</p>
+                    </div>
+                    <div id="feedback-q5" class="md:w-1/4 pt-2 md:pt-0 md:pl-4 text-right"></div>
+                </div>
+
+                <!-- Pregunta 6 -->
+                <div class="p-4 rounded-lg border-2 border-flamingo-pink flex flex-col md:flex-row md:items-start justify-between">
+                    <div class="w-full md:w-3/4">
+                        <p class="font-semibold">¿Puedo ir caminando hasta el hospital?</p>
+                        <p class="ml-4 mt-2">
+                            Sí, puedes ir
+                            <select id="q6" class="quiz-select">
+                                <option value="">...</option>
+                                <option value="en carro">en carro</option>
+                                <option value="caminando">caminando</option>
+                                <option value="en bici">en bici</option>
+                            </select>.
+                            Está a unas tres calles de distancia.
+                        </p>
+                        <p class="text-sm text-gray-500 italic mt-1">Yes, you can walk there. It's about three blocks away.</p>
+                    </div>
+                    <div id="feedback-q6" class="md:w-1/4 pt-2 md:pt-0 md:pl-4 text-right"></div>
+                </div>
+
+                <!-- Pregunta 7 -->
+                <div class="p-4 rounded-lg border-2 border-flamingo-pink flex flex-col md:flex-row md:items-start justify-between">
+                    <div class="w-full md:w-3/4">
+                        <p class="font-semibold">¿Está a la izquierda o a la derecha el cine?</p>
+                        <p class="ml-4 mt-2">
+                            El cine está a la
+                            <select id="q7" class="quiz-select">
+                                <option value="">...</option>
+                                <option value="izquierda">izquierda</option>
+                                <option value="derecha">derecha</option>
+                                <option value="arriba">arriba</option>
+                            </select>,
+                            pasando el restaurante.
+                        </p>
+                        <p class="text-sm text-gray-500 italic mt-1">The cinema is on the right, past the restaurant.</p>
+                    </div>
+                    <div id="feedback-q7" class="md:w-1/4 pt-2 md:pt-0 md:pl-4 text-right"></div>
+                </div>
+
+                <!-- Pregunta 8 -->
+                <div class="p-4 rounded-lg border-2 border-flamingo-pink flex flex-col md:flex-row md:items-start justify-between">
+                    <div class="w-full md:w-3/4">
+                        <p class="font-semibold">¿Cómo puedo llegar al centro comercial desde aquí?</p>
+                        <p class="ml-4 mt-2">
+                            Toma esta avenida todo recto, cruza el puente y verás el centro comercial a tu
+                            <select id="q8" class="quiz-select">
+                                <option value="">...</option>
+                                <option value="izquierda">izquierda</option>
+                                <option value="derecha">derecha</option>
+                            </select>.
+                        </p>
+                        <p class="text-sm text-gray-500 italic mt-1">Take this avenue straight ahead, cross the bridge, and you'll see the shopping mall on your left.</p>
+                    </div>
+                    <div id="feedback-q8" class="md:w-1/4 pt-2 md:pt-0 md:pl-4 text-right"></div>
+                </div>
+
+                <!-- Área de Resultados y Botón para Conversación -->
+                <div class="mt-8 text-center">
+                    <button onclick="checkConversationAnswers()"
+                            class="bg-flamingo-pink text-white px-8 py-3 rounded-lg font-bold shadow-md transition transform hover:scale-105 hover:bg-[#ff5f9e]">
+                        Verificar Respuestas
+                    </button>
+                    <p id="conversation-quiz-result" class="text-xl font-bold mt-4"></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Nueva Sección de Emparejamiento (Matching Activity) -->
+        <section class="mt-12">
+            <h2 class="text-3xl font-bold mb-6 border-b-4 pb-2 border-flamingo-pink inline-block">
+                Actividad 2: Empareja las Preposiciones (Español ↔ Inglés)
+            </h2>
+            <p class="mb-6 text-lg text-gray-600">Haz clic en un término en español y luego en su traducción correcta en inglés.</p>
+
+            <div class="space-y-8">
+                
+                <!-- Parte 1: 5 de 15 -->
+                <div class="p-6 rounded-lg border-2 border-gray-200 bg-gray-50">
+                    <h3 class="text-xl font-semibold mb-4 text-eerie-black">Parte 1 (1-5)</h3>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <!-- Columna de Español (Fija) -->
+                        <div class="space-y-3">
+                            <button id="es_1" class="matching-button w-full" data-lang="es" data-match="In front of" onclick="handleMatchClick(this, 'In front of', 'es')">Delante de</button>
+                            <button id="es_2" class="matching-button w-full" data-lang="es" data-match="Behind" onclick="handleMatchClick(this, 'Behind', 'es')">Detrás de</button>
+                            <button id="es_3" class="matching-button w-full" data-lang="es" data-match="Across from" onclick="handleMatchClick(this, 'Across from', 'es')">Enfrente de</button>
+                            <button id="es_4" class="matching-button w-full" data-lang="es" data-match="Next to" onclick="handleMatchClick(this, 'Next to', 'es')">Al lado de</button>
+                            <button id="es_5" class="matching-button w-full" data-lang="es" data-match="Between" onclick="handleMatchClick(this, 'Between', 'es')">Entre</button>
+                        </div>
+                        
+                        <!-- Columna de Inglés (Barajada) -->
+                        <div class="space-y-3">
+                            <button id="en_1" class="matching-button w-full" data-lang="en" data-match="Across from" onclick="handleMatchClick(this, 'Across from', 'en')">Across from</button>
+                            <button id="en_2" class="matching-button w-full" data-lang="en" data-match="Between" onclick="handleMatchClick(this, 'Between', 'en')">Between</button>
+                            <button id="en_3" class="matching-button w-full" data-lang="en" data-match="Behind" onclick="handleMatchClick(this, 'Behind', 'en')">Behind</button>
+                            <button id="en_4" class="matching-button w-full" data-lang="en" data-match="In front of" onclick="handleMatchClick(this, 'In front of', 'en')">In front of</button>
+                            <button id="en_5" class="matching-button w-full" data-lang="en" data-match="Next to" onclick="handleMatchClick(this, 'Next to', 'en')">Next to</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Parte 2: 5 de 15 -->
+                <div class="p-6 rounded-lg border-2 border-gray-200 bg-gray-50">
+                    <h3 class="text-xl font-semibold mb-4 text-eerie-black">Parte 2 (6-10)</h3>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <!-- Columna de Español (Fija) -->
+                        <div class="space-y-3">
+                            <button id="es_6" class="matching-button w-full" data-lang="es" data-match="Near" onclick="handleMatchClick(this, 'Near', 'es')">Cerca de</button>
+                            <button id="es_7" class="matching-button w-full" data-lang="es" data-match="Far from" onclick="handleMatchClick(this, 'Far from', 'es')">Lejos de</button>
+                            <button id="es_8" class="matching-button w-full" data-lang="es" data-match="To the right of" onclick="handleMatchClick(this, 'To the right of', 'es')">A la derecha de</button>
+                            <button id="es_9" class="matching-button w-full" data-lang="es" data-match="To the left of" onclick="handleMatchClick(this, 'To the left of', 'es')">A la izquierda de</button>
+                            <button id="es_10" class="matching-button w-full" data-lang="es" data-match="In the center of" onclick="handleMatchClick(this, 'In the center of', 'es')">En el centro de</button>
+                        </div>
+                        
+                        <!-- Columna de Inglés (Barajada) -->
+                        <div class="space-y-3">
+                            <button id="en_6" class="matching-button w-full" data-lang="en" data-match="To the left of" onclick="handleMatchClick(this, 'To the left of', 'en')">To the left of</button>
+                            <button id="en_7" class="matching-button w-full" data-lang="en" data-match="Far from" onclick="handleMatchClick(this, 'Far from', 'en')">Far from</button>
+                            <button id="en_8" class="matching-button w-full" data-lang="en" data-match="In the center of" onclick="handleMatchClick(this, 'In the center of', 'en')">In the center of</button>
+                            <button id="en_9" class="matching-button w-full" data-lang="en" data-match="Near" onclick="handleMatchClick(this, 'Near', 'en')">Near</button>
+                            <button id="en_10" class="matching-button w-full" data-lang="en" data-match="To the right of" onclick="handleMatchClick(this, 'To the right of', 'en')">To the right of</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Parte 3: 5 de 15 -->
+                <div class="p-6 rounded-lg border-2 border-gray-200 bg-gray-50">
+                    <h3 class="text-xl font-semibold mb-4 text-eerie-black">Parte 3 (11-15)</h3>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <!-- Columna de Español (Fija) -->
+                        <div class="space-y-3">
+                            <button id="es_11" class="matching-button w-full" data-lang="es" data-match="On the corner of" onclick="handleMatchClick(this, 'On the corner of', 'es')">En la esquina de</button>
+                            <button id="es_12" class="matching-button w-full" data-lang="es" data-match="At the end of" onclick="handleMatchClick(this, 'At the end of', 'es')">Al final de</button>
+                            <button id="es_13" class="matching-button w-full" data-lang="es" data-match="Beside" onclick="handleMatchClick(this, 'Beside', 'es')">Junto a</button>
+                            <button id="es_14" class="matching-button w-full" data-lang="es" data-match="Along" onclick="handleMatchClick(this, 'Along', 'es')">A lo largo de</button>
+                            <button id="es_15" class="matching-button w-full" data-lang="es" data-match="Over" onclick="handleMatchClick(this, 'Over', 'es')">Sobre</button>
+                        </div>
+                        
+                        <!-- Columna de Inglés (Barajada) -->
+                        <div class="space-y-3">
+                            <button id="en_11" class="matching-button w-full" data-lang="en" data-match="Over" onclick="handleMatchClick(this, 'Over', 'en')">Over</button>
+                            <button id="en_12" class="matching-button w-full" data-lang="en" data-match="Along" onclick="handleMatchClick(this, 'Along', 'en')">Along</button>
+                            <button id="en_13" class="matching-button w-full" data-lang="en" data-match="On the corner of" onclick="handleMatchClick(this, 'On the corner of', 'en')">On the corner of</button>
+                            <button id="en_14" class="matching-button w-full" data-lang="en" data-match="At the end of" onclick="handleMatchClick(this, 'At the end of', 'en')">At the end of</button>
+                            <button id="en_15" class="matching-button w-full" data-lang="en" data-match="Beside" onclick="handleMatchClick(this, 'Beside', 'en')">Beside</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Área de Resultados y Botón para Emparejamiento -->
+                <div class="mt-8 text-center">
+                    <button onclick="checkMatchingScore()"
+                            class="bg-flamingo-pink text-white px-8 py-3 rounded-lg font-bold shadow-md transition transform hover:scale-105 hover:bg-[#ff5f9e]">
+                        Verificar Puntaje Final
+                    </button>
+                    <p id="matching-quiz-result" class="text-xl font-bold mt-4"></p>
+                </div>
+
+            </div>
+        </section>
+
+
+    </main>
+
+    <!-- Pie de Página (Footer) -->
+    <footer class="bg-white py-8 px-6 border-t border-gray-100 mt-12">
+        <div class="max-w-4xl mx-auto text-center">
+            <!-- Texto de Copyright -->
+            <p class="text-eerie-black mb-4 text-sm">
+                © 2025 Spanish Lessons with María C. All rights reserved.
+            </p>
+
+            <!-- Botón de Llamada a la Acción -->
+            <a href="https://preply.com/en/tutor/5105409?utm_source=friend&utm_medium=ref&utm_campaign=stu_plg_plg_all_0_mul_xx_multiplesub_share-tutor-tutoring_1&utm_content=OTQ2NTAwNQ=="
+               target="_blank"
+               class="cta-button bg-flamingo-pink text-white shadow-lg hover-bg-flamingo-pink">
+                Find your Spanish class here.
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        // --- Lógica del Quiz de Conversación (Actividad 1) ---
+
+        // Objeto que contiene las respuestas correctas para cada pregunta (ID del select)
+        const correctConversationAnswers = {
+            q1: "izquierda",
+            q2: "enfrente",
+            q4: "está",
+            q5: "detrás",
+            q6: "caminando",
+            q7: "derecha",
+            q8: "izquierda"
+        };
+
+        // Función para verificar las respuestas del quiz de conversación
+        function checkConversationAnswers() {
+            let score = 0;
+            const totalQuestions = Object.keys(correctConversationAnswers).length;
+            const resultElement = document.getElementById('conversation-quiz-result');
+
+            for (const [questionId, correctAnswer] of Object.entries(correctConversationAnswers)) {
+                const selectElement = document.getElementById(questionId);
+                const feedbackElement = document.getElementById(`feedback-${questionId}`);
+                const userAnswer = selectElement.value;
+                
+                // Limpiar feedback anterior
+                feedbackElement.className = "md:w-1/4 pt-2 md:pt-0 md:pl-4 text-right";
+                feedbackElement.textContent = '';
+
+                // Verificar si hay una respuesta seleccionada
+                if (userAnswer === "") {
+                    feedbackElement.textContent = "Selecciona una opción";
+                    feedbackElement.classList.add('text-yellow-600', 'font-bold');
+                    continue; 
+                }
+
+                // Verificar la respuesta
+                if (userAnswer === correctAnswer) {
+                    score++;
+                    feedbackElement.textContent = "¡Correcto!";
+                    feedbackElement.classList.add('text-green-600', 'font-bold');
+                } else {
+                    // Mostrar la respuesta correcta cuando es incorrecta
+                    feedbackElement.textContent = `Incorrecto. La respuesta es: ${correctAnswer}`;
+                    feedbackElement.classList.add('text-red-600', 'font-bold');
+                }
+            }
+
+            // Mostrar resultado final
+            resultElement.textContent = `Tu puntaje es: ${score} de ${totalQuestions}.`;
+            resultElement.className = `text-xl font-bold mt-4 p-3 rounded-lg ${score === totalQuestions ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`;
+        }
+
+
+        // --- Lógica del Quiz de Emparejamiento (Actividad 2 - Botones) ---
+
+        // Variables de estado para el emparejamiento
+        let selectedSpanish = null; // Almacena el elemento DOM del botón español seleccionado
+        let selectedEnglish = null; // Almacena el elemento DOM del botón inglés seleccionado
+        
+        // Función para resetear las selecciones (visual y lógicamente)
+        function resetSelections() {
+            if (selectedSpanish) {
+                selectedSpanish.classList.remove('matching-selected');
+                selectedSpanish = null;
+            }
+            if (selectedEnglish) {
+                selectedEnglish.classList.remove('matching-selected');
+                selectedEnglish = null;
+            }
+        }
+
+        // Función principal que maneja el clic en los botones de emparejamiento
+        function handleMatchClick(element, term, lang) {
+            // No hacer nada si el botón ya está deshabilitado (emparejado correctamente)
+            if (element.disabled) return;
+
+            // Paso 1: Manejar la selección en español
+            if (lang === 'es') {
+                if (selectedSpanish === element) {
+                    // Si se hace clic en el mismo botón, deseleccionar
+                    element.classList.remove('matching-selected');
+                    selectedSpanish = null;
+                } else {
+                    // Deseleccionar el anterior en español, si existe
+                    if (selectedSpanish) {
+                        selectedSpanish.classList.remove('matching-selected');
+                    }
+                    // Seleccionar el nuevo botón en español
+                    element.classList.add('matching-selected');
+                    selectedSpanish = element;
+                }
+            } 
+            
+            // Paso 2: Manejar la selección en inglés
+            else if (lang === 'en') {
+                if (selectedEnglish === element) {
+                    // Si se hace clic en el mismo botón, deseleccionar
+                    element.classList.remove('matching-selected');
+                    selectedEnglish = null;
+                } else {
+                    // Deseleccionar el anterior en inglés, si existe
+                    if (selectedEnglish) {
+                        selectedEnglish.classList.remove('matching-selected');
+                    }
+                    // Seleccionar el nuevo botón en inglés
+                    element.classList.add('matching-selected');
+                    selectedEnglish = element;
+                }
+            }
+
+            // Paso 3: Verificar si hay una pareja completa para chequear
+            if (selectedSpanish && selectedEnglish) {
+                const es_match = selectedSpanish.getAttribute('data-match');
+                const en_match = selectedEnglish.getAttribute('data-match');
+
+                if (es_match === en_match) {
+                    // ¡Acierto!
+                    
+                    // Marcar como correctos y deshabilitar
+                    selectedSpanish.classList.remove('matching-selected');
+                    selectedEnglish.classList.remove('matching-selected');
+                    
+                    selectedSpanish.disabled = true;
+                    selectedEnglish.disabled = true;
+                    
+                    // Resetear el estado para el siguiente par
+                    selectedSpanish = null;
+                    selectedEnglish = null;
+
+                    // Opcional: Proporcionar feedback visual de éxito (ya está integrado en .matching-button[disabled])
+                    console.log("¡Pareja Correcta!");
+
+                } else {
+                    // Error: Mostrar feedback visual rápido y resetear
+                    
+                    // Flash rojo en ambos para indicar error
+                    selectedSpanish.classList.remove('matching-selected');
+                    selectedEnglish.classList.remove('matching-selected');
+
+                    selectedSpanish.classList.add('bg-red-300');
+                    selectedEnglish.classList.add('bg-red-300');
+
+                    // Resetear después de un breve delay
+                    setTimeout(() => {
+                        selectedSpanish.classList.remove('bg-red-300');
+                        selectedEnglish.classList.remove('bg-red-300');
+                        resetSelections(); // Esto también elimina la clase matching-selected
+                    }, 400); // 400ms de flash
+                }
+            }
+        }
+
+        // Función para verificar el puntaje final (llama al hacer clic en el botón)
+        function checkMatchingScore() {
+            const totalButtons = document.querySelectorAll('.matching-button[data-lang="es"]').length;
+            const correctMatches = document.querySelectorAll('.matching-button[data-lang="es"]:disabled').length;
+            const matchingResultElement = document.getElementById('matching-quiz-result');
+
+            // Asegurar que no hay selecciones pendientes antes de mostrar el resultado final
+            resetSelections(); 
+
+            matchingResultElement.textContent = `Tu puntaje de emparejamiento es: ${correctMatches} de ${totalButtons}.`;
+            matchingResultElement.className = `text-xl font-bold mt-4 p-3 rounded-lg ${correctMatches === totalButtons ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`;
+
+            if (correctMatches === totalButtons) {
+                matchingResultElement.textContent += " ¡Felicidades, has completado todos los emparejamientos!";
+            } else {
+                matchingResultElement.textContent += ` Sigue intentando. Te faltan ${totalButtons - correctMatches} parejas.`;
+            }
+        }
+
+    </script>
+</body>
+</html>

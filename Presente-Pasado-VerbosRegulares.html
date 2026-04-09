@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presente - Pasado: Conjugación de Verbos Regulares</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Urbanist:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary: #FF79AC;
+            --secondary: #FFB3D1;
+            --text-main: #121118;
+            --bg-white: #FFFFFF;
+            --divider: #E0E0E0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #121118; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            font-family: 'Urbanist', 'Roboto', sans-serif;
+        }
+
+        .presentation-wrapper {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .slide {
+            display: none; 
+            width: 1280px;
+            max-width: 95vw;
+            height: 720px;
+            max-height: 82vh; /* Reducido ligeramente para evitar solapamiento */
+            background-color: var(--bg-white);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .slide.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .content-wrapper {
+            max-width: 950px;
+            width: 100%;
+            margin: 0 auto;
+            height: 100%;
+            padding: 2.5rem 3rem; /* Ajustado el padding vertical */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        h2.slide-title {
+            font-size: 1.8rem;
+            color: var(--primary);
+            font-weight: 500;
+            border-bottom: 2px solid var(--primary);
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            width: auto;
+        }
+
+        p, li, td, th {
+            font-size: 1.1rem;
+            line-height: 1.5;
+            color: var(--text-main);
+        }
+
+        .lesson-number {
+            font-size: 3rem;
+            color: white;
+            background-color: var(--primary);
+            padding: 0.5rem 1.5rem;
+            display: inline-block;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .pero-box {
+            background-color: var(--secondary);
+            border-left: 4px solid var(--primary);
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .pero-tag {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 700;
+            padding: 2px 8px;
+            margin-right: 10px;
+            text-transform: uppercase;
+        }
+
+        .bullet-list {
+            list-style: none;
+        }
+
+        .bullet-list li {
+            position: relative;
+            padding-left: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .bullet-list li::before {
+            content: "●";
+            color: var(--primary);
+            font-size: 1.5rem;
+            position: absolute;
+            left: 0;
+            top: -5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 5px;
+        }
+
+        th {
+            background-color: var(--primary);
+            color: white;
+            padding: 10px 12px;
+            text-align: left;
+        }
+
+        td {
+            padding: 8px 12px;
+            border-bottom: 1px solid var(--divider);
+        }
+
+        tr:nth-child(even) {
+            background-color: var(--secondary);
+        }
+
+        .highlight-ending {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .nav-controls {
+            position: fixed;
+            bottom: 15px; /* Bajado un poco más */
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: rgba(18, 17, 24, 0.95);
+            padding: 8px 25px;
+            border-radius: 50px;
+            z-index: 100;
+            border: 1px solid var(--primary);
+        }
+
+        .nav-btn {
+            background: var(--primary);
+            border: none;
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover:not(:disabled) {
+            background: var(--secondary);
+            transform: scale(1.1);
+        }
+
+        .nav-btn:disabled {
+            background: #444;
+            cursor: not-allowed;
+        }
+
+        .slide-indicator {
+            color: white;
+            font-weight: 500;
+            min-width: 80px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .title-layout {
+            text-align: center;
+            align-items: center;
+        }
+
+        .tile-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .tile {
+            background-color: var(--secondary);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .tile i {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .bg-shape {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background-color: var(--secondary);
+            opacity: 0.1;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .interactive-field {
+            border: none;
+            border-bottom: 2px solid var(--primary);
+            padding: 0 5px;
+            font-size: 1.2rem;
+            width: 130px;
+            outline: none;
+            background: transparent;
+            text-align: center;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .practice-context {
+            background: #fdfdfd;
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px dashed var(--primary);
+            line-height: 2.2;
+            font-size: 1.25rem;
+        }
+
+        blockquote {
+            font-size: 2rem;
+            font-style: italic;
+            border-left: 8px solid var(--primary);
+            padding-left: 30px;
+            color: var(--text-main);
+            line-height: 1.3;
+        }
+
+        .full-pattern {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .full-pattern h1 {
+            font-size: 7rem;
+            margin-bottom: 0.5rem;
+            line-height: 1;
+        }
+    </style>
+</head>
+<body>
+
+<div class="presentation-wrapper">
+    
+    <!-- 1. Portada -->
+    <div class="slide active" id="slide-1">
+        <div class="bg-shape" style="top: -150px; right: -150px;"></div>
+        <div class="content-wrapper title-layout">
+            <div class="lesson-number">01</div>
+            <h1>Presente - Pasado</h1>
+            <p style="text-align: center; font-size: 1.4rem;">Guía de Conjugación de Verbos Regulares</p>
+        </div>
+    </div>
+
+    <!-- 2. Introducción -->
+    <div class="slide" id="slide-2">
+        <div class="content-wrapper">
+            <h2 class="slide-title">Fundamentos Verbales</h2>
+            <p>Aprender a conjugar en español requiere entender la relación entre la <strong>raíz</strong> del verbo y su <strong>terminación</strong>. En esta lección, exploraremos cómo expresar acciones hoy y en el pasado.</p>
+            <div class="pero-box">
+                <p><span class="pero-tag">PERO</span> Antes de conjugar, identifica si el verbo termina en <strong>-ar, -er</strong> o <strong>-ir</strong>, ya que esto determina el patrón de las terminaciones.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. Dimensiones -->
+    <div class="slide" id="slide-3">
+        <div class="content-wrapper">
+            <h2 class="slide-title">Las Dimensiones del Pasado</h2>
+            <div class="tile-grid">
+                <div class="tile">
+                    <i class="fa-solid fa-calendar-day"></i>
+                    <h3>Presente</h3>
+                    <p>Acciones habituales o verdades universales. Lo que sucede hoy.</p>
+                </div>
+                <div class="tile">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    <h3>Indefinido</h3>
+                    <p>Acciones terminadas en un punto específico del pasado. (Ayer, 1995)</p>
+                </div>
+                <div class="tile">
+                    <i class="fa-solid fa-hourglass-half"></i>
+                    <h3>Imperfecto</h3>
+                    <p>Descripciones, rutinas pasadas, o acciones sin un final definido.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. Tabla -AR -->
+    <div class="slide" id="slide-4">
+        <div class="content-wrapper">
+            <h2 class="slide-title">Verbos Regulares -AR (Hablar)</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Pronombre</th>
+                        <th>Raíz</th>
+                        <th>Presente</th>
+                        <th>Indefinido</th>
+                        <th>Imperfecto</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Yo</td><td>Habl-</td><td class="highlight-ending">o</td><td class="highlight-ending">é</td><td class="highlight-ending">aba</td></tr>
+                    <tr><td>Tú</td><td>Habl-</td><td class="highlight-ending">as</td><td class="highlight-ending">aste</td><td class="highlight-ending">abas</td></tr>
+                    <tr><td>Él/Ella/Ud</td><td>Habl-</td><td class="highlight-ending">a</td><td class="highlight-ending">ó</td><td class="highlight-ending">aba</td></tr>
+                    <tr><td>Nosotros</td><td>Habl-</td><td class="highlight-ending">amos</td><td class="highlight-ending">amos</td><td class="highlight-ending">ábamos</td></tr>
+                    <tr><td>Vosotros</td><td>Habl-</td><td class="highlight-ending">áis</td><td class="highlight-ending">asteis</td><td class="highlight-ending">abais</td></tr>
+                    <tr><td>Ellos/Uds</td><td>Habl-</td><td class="highlight-ending">an</td><td class="highlight-ending">aron</td><td class="highlight-ending">aban</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 5. Tabla -ER -->
+    <div class="slide" id="slide-5">
+        <div class="content-wrapper">
+            <h2 class="slide-title">Verbos Regulares -ER (Comer)</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Pronombre</th>
+                        <th>Raíz</th>
+                        <th>Presente</th>
+                        <th>Indefinido</th>
+                        <th>Imperfecto</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Yo</td><td>Com-</td><td class="highlight-ending">o</td><td class="highlight-ending">í</td><td class="highlight-ending">ía</td></tr>
+                    <tr><td>Tú</td><td>Com-</td><td class="highlight-ending">es</td><td class="highlight-ending">iste</td><td class="highlight-ending">ías</td></tr>
+                    <tr><td>Él/Ella/Ud</td><td>Com-</td><td class="highlight-ending">e</td><td class="highlight-ending">ió</td><td class="highlight-ending">ía</td></tr>
+                    <tr><td>Nosotros</td><td>Com-</td><td class="highlight-ending">emos</td><td class="highlight-ending">imos</td><td class="highlight-ending">íamos</td></tr>
+                    <tr><td>Vosotros</td><td>Com-</td><td class="highlight-ending">éis</td><td class="highlight-ending">isteis</td><td class="highlight-ending">íais</td></tr>
+                    <tr><td>Ellos/Uds</td><td>Com-</td><td class="highlight-ending">en</td><td class="highlight-ending">ieron</td><td class="highlight-ending">ían</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 6. Tabla -IR -->
+    <div class="slide" id="slide-6">
+        <div class="content-wrapper">
+            <h2 class="slide-title">Verbos Regulares -IR (Vivir)</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Pronombre</th>
+                        <th>Raíz</th>
+                        <th>Presente</th>
+                        <th>Indefinido</th>
+                        <th>Imperfecto</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Yo</td><td>Viv-</td><td class="highlight-ending">o</td><td class="highlight-ending">í</td><td class="highlight-ending">ía</td></tr>
+                    <tr><td>Tú</td><td>Viv-</td><td class="highlight-ending">es</td><td class="highlight-ending">iste</td><td class="highlight-ending">ías</td></tr>
+                    <tr><td>Él/Ella/Ud</td><td>Viv-</td><td class="highlight-ending">e</td><td class="highlight-ending">ió</td><td class="highlight-ending">ía</td></tr>
+                    <tr><td>Nosotros</td><td>Viv-</td><td class="highlight-ending">imos</td><td class="highlight-ending">imos</td><td class="highlight-ending">íamos</td></tr>
+                    <tr><td>Vosotros</td><td>Viv-</td><td class="highlight-ending">ís</td><td class="highlight-ending">isteis</td><td class="highlight-ending">íais</td></tr>
+                    <tr><td>Ellos/Uds</td><td>Viv-</td><td class="highlight-ending">en</td><td class="highlight-ending">ieron</td><td class="highlight-ending">ían</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 7. Reglas de Oro -->
+    <div class="slide" id="slide-7">
+        <div class="content-wrapper">
+            <h2 class="slide-title">Reglas de Oro</h2>
+            <ul class="bullet-list">
+                <li><strong>Raíz invariable:</strong> En los verbos regulares, la parte inicial nunca cambia.</li>
+                <li><strong>Acentos críticos:</strong> El indefinido lleva tilde en la 1erª y 3erª persona del singular (yo comí - él comió).</li>
+                <li><strong>Simetría -ER/-IR:</strong> Estos grupos comparten las mismas terminaciones en el pasado.</li>
+                <li><strong>Nosotros:</strong> En los verbos -ar e -ir, la forma de "nosotros" es igual en presente e indefinido.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 8. Patrón 100% -->
+    <div class="slide" id="slide-8">
+        <div class="content-wrapper full-pattern">
+            <h1>100%</h1>
+            <h2 class="slide-title" style="border-bottom:none; margin-bottom: 0.5rem;">Patrón de Dominio</h2>
+            <p style="text-align: center; max-width: 800px;">Este sistema se aplica a todos los verbos regulares del español, dominar estos tres tiempos te permite comunicar el 80% de tus ideas diarias. Conocer estos patrones te otorga el control total de los verbos regulares. Una vez dominada la raíz y estas terminaciones, puedes conjugar casi cualquier verbo regular sin errores.</p>
+        </div>
+    </div>
+
+    <!-- 9. Cita Flora Lewis -->
+    <div class="slide" id="slide-9">
+        <div class="content-wrapper">
+            <blockquote>
+                "Aprender otro idioma no es solo aprender palabras diferentes para las mismas cosas, sino aprender otra manera de pensar sobre las cosas."
+            </blockquote>
+            <p style="text-align: right; margin-top: 30px; font-size: 1.5rem; color: var(--primary);">— Flora Lewis</p>
+        </div>
+    </div>
+
+    <!-- 10. Práctica Interactiva (Sin pistas) -->
+    <div class="slide" id="slide-10">
+        <div class="content-wrapper">
+            <h2 class="slide-title">Práctica Interactiva</h2>
+            <p style="margin-bottom: 20px;">Completa la historia con la forma correcta del verbo <strong>Hablar</strong>:</p>
+            
+            <div class="practice-context">
+                Normalmente, yo <input type="text" class="interactive-field"> (presente) todos los días con mis amigos por teléfono. Sin embargo, ayer fue un día muy ocupado y no <input type="text" class="interactive-field"> (indefinido) nada con ellos. Lo curioso es que, hace unos años, cuando era niño, yo <input type="text" class="interactive-field"> (imperfecto) mucho menos que ahora. 
+            </div>
+            
+            <p style="margin-top: 20px; font-size: 0.9rem; color: #666;">Pista: Observa los marcadores de tiempo para elegir el tiempo correcto.</p>
+        </div>
+    </div>
+
+    <!-- 11. Inmersión -->
+    <div class="slide" id="slide-11">
+        <div class="content-wrapper">
+            <h2 class="slide-title">Inmersión Diaria</h2>
+            <p>Para internalizar estas formas, no basta con leerlas. Observa el mundo a tu alrededor. ¿Qué <strong>comes</strong>? ¿Dónde <strong>vives</strong>? ¿Con quién <strong>hablas</strong>?</p>
+            <div class="pero-box" style="margin-top:20px;">
+                <p><strong>Consejo:</strong> Intenta describir tus acciones de hoy usando el presente, lo que hiciste ayer con el indefinido y tus recuerdos con el imperfecto. Esta práctica diaria construye fluidez real.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 12. Parte Final / Preguntas -->
+    <div class="slide" id="slide-12">
+        <div class="content-wrapper title-layout">
+            <i class="fa-solid fa-circle-question" style="font-size: 5rem; color: var(--primary); margin-bottom: 20px;"></i>
+            <h1 style="margin-bottom: 10px;">¿Estás listo para mejorar tu español?</h1>
+            <p style="text-align: center; font-size: 1.3rem; max-width: 700px;">El dominio de la conjugación es el primer paso hacia la conversación fluida.</p>
+
+        </div>
+    </div>
+
+</div>
+
+<!-- Controles de Navegación -->
+<div class="nav-controls">
+    <button class="nav-btn" id="prevBtn" title="Anterior">
+        <i class="fa-solid fa-chevron-left"></i>
+    </button>
+    <div class="slide-indicator" id="indicator">1 / 12</div>
+    <button class="nav-btn" id="nextBtn" title="Siguiente">
+        <i class="fa-solid fa-chevron-right"></i>
+    </button>
+</div>
+
+<script>
+    let currentSlide = 1;
+    const totalSlides = 12;
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const indicator = document.getElementById('indicator');
+
+    function updateSlides() {
+        document.querySelectorAll('.slide').forEach(slide => {
+            slide.classList.remove('active');
+        });
+        document.getElementById(`slide-${currentSlide}`).classList.add('active');
+        indicator.textContent = `${currentSlide} / ${totalSlides}`;
+        prevBtn.disabled = currentSlide === 1;
+        nextBtn.disabled = currentSlide === totalSlides;
+    }
+
+    prevBtn.addEventListener('click', () => {
+        if (currentSlide > 1) { currentSlide--; updateSlides(); }
+    });
+
+    nextBtn.addEventListener('click', () => {
+        if (currentSlide < totalSlides) { currentSlide++; updateSlides(); }
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === ' ') {
+            if (currentSlide < totalSlides) { currentSlide++; updateSlides(); }
+        }
+        if (e.key === 'ArrowLeft') {
+            if (currentSlide > 1) { currentSlide--; updateSlides(); }
+        }
+    });
+
+    const fields = document.querySelectorAll('.interactive-field');
+    fields.forEach((field, index) => {
+        field.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                const nextField = fields[index + 1];
+                if (nextField) { nextField.focus(); }
+            }
+        });
+    });
+
+    updateSlides();
+</script>
+
+</body>
+</html>
